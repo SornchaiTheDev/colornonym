@@ -4,12 +4,14 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    colors: {
-      transparent: "transparent",
-      current: "currentColor",
-      primary: "#2E282A",
+    extend: {
+      colors: {
+        transparent: "transparent",
+        current: "currentColor",
+        primary: "#2E282A",
+        timer: "#FFC914",
+      },
     },
-    // extend: {},
   },
   plugins: [],
 };
