@@ -1,22 +1,14 @@
-import React from "react";
-import useTimer from "../hooks/timer";
+import useColor from "../hooks/colorgenerate";
+import ColorBtn from "./ColorBtn";
 
 function ColorParts() {
-  const [timer, startTimer] = useTimer();
-  React.useEffect(() => {
-    startTimer();
-  }, []);
+  const [colors, correctIndex] = useColor();
+
   return (
     <div className="grid grid-cols-3 gap-6 mt-20">
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#107E7D]"></div>
-      <div className="w-24 h-24 rounded-full bg-[#327c7b]"></div>
+      {colors.map((color, index) => (
+        <ColorBtn key={index} color={color} isCorrect={index == correctIndex} />
+      ))}
     </div>
   );
 }

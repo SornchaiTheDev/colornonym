@@ -1,12 +1,12 @@
-import React from "react";
-import useTimer from "../hooks/timer";
+import React, { useContext } from "react";
+import { Context } from "../hooks/context";
 
 function Timer() {
-  const [time, startTimer] = useTimer();
+  const { timer } = useContext(Context);
 
   return (
     <div className="flex justify-center items-center flex-col space-y-2">
-      <h1 className="text-timer text-6xl">{time}</h1>
+      <h1 className="text-timer text-6xl">{timer}</h1>
       <span className="w-24 h-2 bg-white "></span>
     </div>
   );

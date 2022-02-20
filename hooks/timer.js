@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
 
-/**
- *
- * create a timer using date - now
- * check if user click button
- */
-
 export default function useTimer() {
   const [initialTime, setInitialTime] = useState(null);
-  const [time, setTime] = useState(10);
+  const [timer, setTimer] = useState(10);
   const [isStart, setIsStart] = useState(false);
 
   // Countdown Function
@@ -19,16 +13,22 @@ export default function useTimer() {
           (initialTime - new Date(Date.now()).getTime()) / 1000
         );
         if (seconds <= 0) setIsStart(false);
-        setTime(seconds);
+        setTimer(seconds);
       }
     }, 1000);
     return () => clearInterval(count);
-  }, [time, isStart]);
+  }, [timer, isStart]);
 
   const startTimer = () => {
+    if (isStart) return;
     setIsStart(true);
     setInitialTime(new Date(Date.now() + 10000).getTime());
   };
 
-  return [time, startTimer];
+  const resetTimer = () => {
+    setTimer(10);
+    setInitialTime(new Date(Date.now() + 10000).getTime());
+  };
+
+  return [timer, startTimer, resetTimer];
 }

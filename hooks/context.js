@@ -1,8 +1,16 @@
 import React, { createContext, useContext, useRe } from "react";
+import useTimer from "./timer";
 
-const Context = createContext(null);
+// Context Initial
+export const Context = createContext(null);
+
 function ContextProvider({ children }) {
-  return <Context.Provider value={null}>{children}</Context.Provider>;
+  const [timer, startTimer, resetTimer] = useTimer();
+  return (
+    <Context.Provider value={{ timer, startTimer, resetTimer }}>
+      {children}
+    </Context.Provider>
+  );
 }
 
 export default ContextProvider;
