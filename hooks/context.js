@@ -1,16 +1,34 @@
-import React, { createContext, useContext, useRe } from "react";
-import useTimer from "./timer";
+import React, { createContext, useEffect } from "react";
+import useTimer from "./useTimer";
+import useColor from "./useColor";
+import useGame from "./useGame";
 
 // Context Initial
 export const Context = createContext(null);
 
 function ContextProvider({ children }) {
-  const [timer, startTimer, resetTimer] = useTimer();
-  return (
-    <Context.Provider value={{ timer, startTimer, resetTimer }}>
-      {children}
-    </Context.Provider>
-  );
+  const [timer, startTimer, resetTimer, minusTimer] = useTimer();
+  const [colors, correctIndex, randomColor] = useColor();
+  const { score, addScore } = useGame();
+  useEffect(() => {
+    console.log(timer);
+  }, [timer]);
+
+  const contextValue = {
+    timer,
+    startTimer,
+    resetTimer,
+    colors,
+    correctIndex,
+    randomColor,
+    score,
+    addScore,
+    minusTimer,
+  };
+  useEffect(() => {
+    if (timer == 0) alert("Game Over!");
+  }, [timer]);
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
 
 export default ContextProvider;

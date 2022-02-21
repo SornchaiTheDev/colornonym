@@ -12,8 +12,8 @@ export default function useTimer() {
         const seconds = Math.round(
           (initialTime - new Date(Date.now()).getTime()) / 1000
         );
-        if (seconds <= 0) setIsStart(false);
         setTimer(seconds);
+        if (seconds <= 0) setIsStart(false);
       }
     }, 1000);
     return () => clearInterval(count);
@@ -24,11 +24,14 @@ export default function useTimer() {
     setIsStart(true);
     setInitialTime(new Date(Date.now() + 10000).getTime());
   };
+  const minusTimer = (time) => {
+    setInitialTime((prev) => prev - (time * 1000));
+  };
 
   const resetTimer = () => {
     setTimer(10);
     setInitialTime(new Date(Date.now() + 10000).getTime());
   };
 
-  return [timer, startTimer, resetTimer];
+  return [timer, startTimer, resetTimer, minusTimer];
 }

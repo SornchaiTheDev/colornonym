@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function hslToHex(h, s, l) {
   l /= 100;
@@ -16,7 +16,12 @@ function hslToHex(h, s, l) {
 function useColor() {
   const [colors, setColors] = useState([]);
   const [correctIndex, setCorrectIndex] = useState(0);
-  React.useEffect(() => {
+
+  useEffect(() => {
+    randomColor();
+  }, []);
+
+  const randomColor = () => {
     let colorsArray = new Array(9).fill("");
     const random = Math.floor(Math.random() * 360);
     colorsArray.forEach((_, index) => {
@@ -26,9 +31,9 @@ function useColor() {
     colorsArray[randomIndex] = hslToHex(random, 100, 40);
     setCorrectIndex(randomIndex);
     setColors(colorsArray);
-  }, []);
+  };
 
-  return [colors, correctIndex];
+  return [colors, correctIndex, randomColor];
 }
 
 export default useColor;
