@@ -31,6 +31,7 @@ function ContextProvider({ children }) {
     // console.log(timer);
     if (timer <= 0) alert("Game Over!");
   }, [timer]);
+
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }
 

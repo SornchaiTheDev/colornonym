@@ -20,7 +20,6 @@
 import { useEffect, useState } from "react";
 function useGame() {
   const [score, setScore] = useState(0);
-
   const addScore = () => {
     setScore(score + 1);
   };
