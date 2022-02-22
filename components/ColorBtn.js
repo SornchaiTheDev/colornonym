@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Context } from "../hooks/context";
 
@@ -26,8 +26,7 @@ function ColorBtn({ color, isCorrect }) {
     window.btoa(renderToStaticMarkup(<SVGColorBtn color={color} />))
   );
 
-  // set Image height for safari
-  const [imgHeight, setImgHeight] = useState(0);
+  // Validate if user press the right color
   const validateColor = () => {
     if (timer <= 0) return;
     startTimer();
@@ -43,9 +42,8 @@ function ColorBtn({ color, isCorrect }) {
 
   return (
     <img
-      ref={imgRef}
       className="place-self-stretch"
-      style={{ height: imgHeight }}
+      style={{ height: "100%" }}
       onClick={validateColor}
       src={`data:image/svg+xml;base64,${svgBtn}`}
     />
