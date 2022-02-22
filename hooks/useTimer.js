@@ -16,7 +16,6 @@ export default function useTimer() {
         if (seconds <= 0) setIsStart(false);
       }
     }, 1000);
-    console.log("called");
     return () => clearInterval(count);
   }, [timer, isStart, initialTime]);
 

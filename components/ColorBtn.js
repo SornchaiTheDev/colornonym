@@ -9,7 +9,7 @@ function SVGColorBtn({ color }) {
         <title>ColorBtn</title>
         <g id="Layer_1">
           <title>Layer 1</title>
-          <circle id="svg_1" cx="50" cy="50" r={50} fill={color} />
+          <circle id="svg_1" cx="50" cy="50" r={size} fill={color} />
         </g>
       </svg>
     </>
@@ -18,8 +18,16 @@ function SVGColorBtn({ color }) {
 
 function ColorBtn({ color, isCorrect }) {
   // Get Context Value
-  const { startTimer, resetTimer, randomColor, addScore, minusTimer, timer } =
-    useContext(Context);
+  const {
+    startTimer,
+    resetTimer,
+    randomColor,
+    addScore,
+    minusTimer,
+    timer,
+    column,
+    score,
+  } = useContext(Context);
 
   // Convert Svg to base64
   const svgBtn = encodeURIComponent(
@@ -28,12 +36,13 @@ function ColorBtn({ color, isCorrect }) {
 
   // Validate if user press the right color
   const validateColor = () => {
+    console.log(column);
     if (timer <= 0) return;
     startTimer();
     if (isCorrect) {
       resetTimer();
-      randomColor();
       addScore();
+      randomColor(score);
     } else {
       startTimer();
       minusTimer(3);

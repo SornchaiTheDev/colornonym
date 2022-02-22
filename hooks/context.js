@@ -8,8 +8,8 @@ export const Context = createContext(null);
 
 function ContextProvider({ children }) {
   const { timer, startTimer, resetTimer, minusTimer } = useTimer();
-  const [colors, correctIndex, randomColor] = useColor();
-  const { score, addScore } = useGame();
+  const { colors, correctIndex, randomColor } = useColor();
+  const { score, addScore, column } = useGame();
 
   const contextValue = {
     timer,
@@ -21,9 +21,10 @@ function ContextProvider({ children }) {
     score,
     addScore,
     minusTimer,
+    column,
   };
   useEffect(() => {
-    console.log(timer);
+    // console.log(timer);
     if (timer <= 0) alert("Game Over!");
   }, [timer]);
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

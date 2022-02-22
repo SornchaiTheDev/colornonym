@@ -17,7 +17,7 @@ function index() {
           <ColorParts />
           <Inspired />
         </div>
-        {/* <Ads /> */}
+        <Ads />
       </div>
     </ContextProvider>
   );
