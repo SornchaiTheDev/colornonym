@@ -10,9 +10,6 @@ function ContextProvider({ children }) {
   const [timer, startTimer, resetTimer, minusTimer] = useTimer();
   const [colors, correctIndex, randomColor] = useColor();
   const { score, addScore } = useGame();
-  useEffect(() => {
-    console.log(timer);
-  }, [timer]);
 
   const contextValue = {
     timer,

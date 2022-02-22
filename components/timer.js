@@ -5,9 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 function Timer() {
   const { score, timer } = useContext(Context);
-  useEffect(() => {
-    console.log(score);
-  }, [score]);
+  
 
   return (
     <div className="flex justify-center items-center flex-col space-y-2  p-4">
