@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Context } from "./context";
 
 function hslToHex(h, s, l) {
   l /= 100;

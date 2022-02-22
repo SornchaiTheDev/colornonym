@@ -2,7 +2,7 @@ import React from "react";
 
 function Inspired() {
   return (
-    <h3 className="text-white text-xl mt-10 text-center">
+    <h3 className="text-white text-md mt-10 text-center">
       Inspired by{" "}
       <a
         className="text-bold text-[#FFC914] underline decoration-dotted"

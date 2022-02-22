@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import useTimer from "./useTimer";
 import useColor from "./useColor";
 import useGame from "./useGame";
@@ -9,7 +9,11 @@ export const Context = createContext(null);
 function ContextProvider({ children }) {
   const { timer, startTimer, resetTimer, minusTimer } = useTimer();
   const { colors, correctIndex, randomColor } = useColor();
-  const { score, addScore, column } = useGame();
+  const { score, addScore } = useGame();
+  const [column, setColumn] = useState(2);
+  useEffect(() => {
+    setColumn(Math.floor(score / 5) + 2);
+  }, [score]);
 
   const contextValue = {
     timer,
