@@ -7,9 +7,10 @@ function ColorParts() {
 
   return (
     <div
-      className={`w-2/3 h-full md:w-3/12 grid items-center justify-center gap-4 mt-10 `}
+      className={`w-full md:w-1/2 grid items-center justify-center gap-4 mt-10 `}
       style={{
         gridTemplateColumns: `repeat(${column}, minmax(0, 1fr))`,
+        gridAutoFlow: true,
       }}
     >
       {colors.map((color, index) => (

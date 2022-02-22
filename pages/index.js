@@ -12,12 +12,14 @@ function index() {
       <Head>
         <title>ItsTheSameOne</title>
       </Head>
-      <div className="flex flex-col justify-start pt-20 items-center bg-primary min-h-screen pb-20">
-        <Timer />
-        <ColorParts />
-        <Inspired />
-        <LeaderBoard />
-        <Ads />
+      <div className="flex flex-col justify-start pt-20 items-center bg-primary min-h-screen ">
+        <div className="w-3/4 md:w-1/2 flex flex-col items-center">
+          <Timer />
+          <ColorParts />
+          <Inspired />
+          <LeaderBoard />
+          <Ads />
+        </div>
       </div>
     </ContextProvider>
   );
