@@ -17,7 +17,7 @@ export default function useTimer() {
       }
     }, 1000);
     return () => clearInterval(count);
-  }, [timer, isStart]);
+  }, [timer, isStart, initialTime]);
 
   const startTimer = () => {
     if (isStart) return;
@@ -25,7 +25,7 @@ export default function useTimer() {
     setInitialTime(new Date(Date.now() + 10000).getTime());
   };
   const minusTimer = (time) => {
-    setInitialTime((prev) => prev - (time * 1000));
+    setInitialTime((prev) => new Date(prev - time * 1000).getTime());
   };
 
   const resetTimer = () => {

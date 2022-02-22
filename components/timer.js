@@ -1,13 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../hooks/context";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 function Timer() {
-  const { timer } = useContext(Context);
+  const { score, timer } = useContext(Context);
+  useEffect(() => {
+    console.log(score);
+  }, [score]);
 
   return (
-    <div className="flex justify-center items-center flex-col space-y-2">
-      <h1 className="text-timer text-6xl">{timer}</h1>
-      <span className="w-24 h-2 bg-white "></span>
+    <div className="flex justify-center items-center flex-col space-y-2  p-4">
+      <div className="w-28 h-28">
+        <CircularProgressbar
+          maxValue={10}
+          value={timer}
+          text={score.toString()}
+          strokeWidth={50}
+          styles={buildStyles({
+            strokeLinecap: "butt",
+            textSize: "2rem",
+            trailColor: "transparent",
+            pathColor: "white",
+            textColor: "#FFC914",
+          })}
+        />
+      </div>
     </div>
   );
 }

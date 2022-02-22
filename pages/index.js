@@ -1,6 +1,6 @@
 import ContextProvider from "../hooks/context";
 import ColorParts from "../components/ColorParts";
-import Timer from "../components/timer";
+import Timer from "../components/Timer";
 
 function index() {
   return (
