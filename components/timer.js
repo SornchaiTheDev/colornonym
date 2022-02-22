@@ -5,11 +5,10 @@ import "react-circular-progressbar/dist/styles.css";
 
 function Timer() {
   const { score, timer } = useContext(Context);
-  
 
   return (
-    <div className="flex justify-center items-center flex-col space-y-2  p-4">
-      <div className="w-28 h-28">
+    <div className="flex justify-center items-center flex-col">
+      <div className="w-24 h-24">
         <CircularProgressbar
           maxValue={10}
           value={timer}

@@ -7,7 +7,7 @@ import useGame from "./useGame";
 export const Context = createContext(null);
 
 function ContextProvider({ children }) {
-  const [timer, startTimer, resetTimer, minusTimer] = useTimer();
+  const { timer, startTimer, resetTimer, minusTimer } = useTimer();
   const [colors, correctIndex, randomColor] = useColor();
   const { score, addScore } = useGame();
 
@@ -23,7 +23,8 @@ function ContextProvider({ children }) {
     minusTimer,
   };
   useEffect(() => {
-    if (timer == 0) alert("Game Over!");
+    console.log(timer);
+    if (timer <= 0) alert("Game Over!");
   }, [timer]);
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }

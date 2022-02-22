@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Context } from "../hooks/context";
 
@@ -17,12 +17,19 @@ function SVGColorBtn({ color }) {
 }
 
 function ColorBtn({ color, isCorrect }) {
-  const { startTimer, resetTimer, randomColor, addScore, minusTimer } =
+  // Get Context Value
+  const { startTimer, resetTimer, randomColor, addScore, minusTimer, timer } =
     useContext(Context);
+
+  // Convert Svg to base64
   const svgBtn = encodeURIComponent(
     window.btoa(renderToStaticMarkup(<SVGColorBtn color={color} />))
   );
+
+  // set Image height for safari
+  const [imgHeight, setImgHeight] = useState(0);
   const validateColor = () => {
+    if (timer <= 0) return;
     startTimer();
     if (isCorrect) {
       resetTimer();
@@ -30,12 +37,18 @@ function ColorBtn({ color, isCorrect }) {
       addScore();
     } else {
       startTimer();
-      minusTimer(1);
+      minusTimer(3);
     }
   };
 
   return (
-    <img onClick={validateColor} src={`data:image/svg+xml;base64,${svgBtn}`} />
+    <img
+      ref={imgRef}
+      className="place-self-stretch"
+      style={{ height: imgHeight }}
+      onClick={validateColor}
+      src={`data:image/svg+xml;base64,${svgBtn}`}
+    />
   );
 }
 

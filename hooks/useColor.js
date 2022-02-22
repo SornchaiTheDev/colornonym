@@ -22,7 +22,7 @@ function useColor() {
   }, []);
 
   const randomColor = () => {
-    let colorsArray = new Array(9).fill("");
+    let colorsArray = new Array(4).fill("");
     const random = Math.floor(Math.random() * 360);
     colorsArray.forEach((_, index) => {
       colorsArray[index] = hslToHex(random, 100, 50);

@@ -35,5 +35,5 @@ export default function useTimer() {
     setInitialTime(new Date(Date.now() + 10000).getTime());
   };
 
-  return [timer, startTimer, resetTimer, minusTimer];
+  return { timer, startTimer, resetTimer, minusTimer };
 }
