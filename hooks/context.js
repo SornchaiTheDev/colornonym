@@ -13,22 +13,22 @@ function ContextProvider({ children }) {
   const [column, setColumn] = useState(2);
   useEffect(() => {
     setColumn(Math.floor(score / 5) + 2);
-    switch(mode) {
-      case "EASY":
-        startTimer(10);
-        break;
-      case "NORMAL":
-        startTimer(5);
-        break;
-      case "HARD":
-        startTimer(3);
-        break;
-      case "INSANE":
-        startTimer(2);
-        break;
-      case "GOD":
-        startTimer(1);
-    }
+    // switch(mode) {
+    //   case "EASY":
+    //     startTimer(10);
+    //     break;
+    //   case "NORMAL":
+    //     startTimer(5);
+    //     break;
+    //   case "HARD":
+    //     startTimer(3);
+    //     break;
+    //   case "INSANE":
+    //     startTimer(2);
+    //     break;
+    //   case "GOD":
+    //     startTimer(1);
+    // }
   }, [score]);
 
   const contextValue = {

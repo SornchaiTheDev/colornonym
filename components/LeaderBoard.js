@@ -21,7 +21,7 @@ function Player({ name, score, place, country, fullCountry }) {
 
 function LeaderBoard() {
   return (
-    <div className="w-3/4 md:w-5/12 mt-10">
+    <div className="w-3/4 md:w-9/12 mt-10">
       <h1 className="text-center font-bold text-2xl text-white">Leaderboard</h1>
       <div className="flex flex-col items-center mt-10">
         <Player
