@@ -4,6 +4,7 @@ export default function useTimer() {
   const [initialTime, setInitialTime] = useState(null);
   const [timer, setTimer] = useState(10);
   const [maxTimer, setMaxTimer] = useState(10);
+  const [minusTime, setMinusTime] = useState(3);
   const [isStart, setIsStart] = useState(false);
 
   // Countdown Function
@@ -20,23 +21,30 @@ export default function useTimer() {
     return () => clearInterval(count);
   }, [timer, isStart, initialTime]);
 
-  const startTimer = (seconds = 10) => {
+  const startTimer = () => {
     setIsStart(true);
-    setTimer(seconds);
-    setMaxTimer(seconds);
-    setInitialTime(new Date(Date.now() + seconds * 1000).getTime());
-  };
-  
-  const minusTimer = (time) => {
-    setTimer((prev) => prev - time);
-    setInitialTime((prev) => new Date(prev - time * 1000).getTime());
+    setInitialTime(new Date(Date.now() + maxTimer * 1000).getTime());
   };
 
-  const resetTimer = (seconds = 10) => {
-    setTimer(seconds);
-    setMaxTimer(seconds);
-    setInitialTime(new Date(Date.now() + seconds * 1000).getTime());
+  const minusTimer = () => {
+    setTimer((prev) => prev - minusTime);
+    setInitialTime((prev) => new Date(prev - minusTime * 1000).getTime());
   };
 
-  return { timer, startTimer, resetTimer, minusTimer, maxTimer, isStart };
+  const resetTimer = () => {
+    setTimer(maxTimer);
+    setMaxTimer(timer);
+    setInitialTime(new Date(Date.now() + maxTimer * 1000).getTime());
+  };
+
+  return {
+    timer,
+    setMaxTimer,
+    startTimer,
+    resetTimer,
+    minusTimer,
+    maxTimer,
+    isStart,
+    setMinusTime,
+  };
 }

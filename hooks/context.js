@@ -9,13 +9,22 @@ export const Context = createContext(null);
 function ContextProvider({ children }) {
   const [columnScore, setColumnScore] = useState(0);
   const [column, setColumn] = useState(2);
-  const { timer, startTimer, resetTimer, minusTimer, maxTimer, isStart } =
-    useTimer();
+  const {
+    setMaxTimer,
+    timer,
+    startTimer,
+    resetTimer,
+    minusTimer,
+    setMinusTime,
+    maxTimer,
+    isStart,
+  } = useTimer();
   const { colors, correctIndex, randomColor } = useColor({ columnScore });
   const { score, addScore, mode, correct, wrong } = useGame({
     resetTimer,
     randomColor,
     minusTimer,
+    maxTimer,
   });
   const user = { name: "โชกุนนน", score: 10 };
 
@@ -25,19 +34,31 @@ function ContextProvider({ children }) {
       Math.floor(columnScore / 5) + 2 <= 5 ? Math.floor(columnScore / 5) + 2 : 5
     );
     switch (mode) {
+      case "EASY":
+        setMaxTimer(10);
+        setMinusTime(2);
+        break;
       case "NORMAL":
-        startTimer(5);
+        setMaxTimer(5);
+        setMinusTime(3);
         break;
       case "HARD":
-        startTimer(3);
+        setMaxTimer(3);
+        setMinusTime(3);
         break;
       case "INSANE":
-        startTimer(2);
+        setMaxTimer(2);
         break;
       case "GOD":
-        startTimer(1);
+        setMaxTimer(1);
+        break;
     }
   }, [score]);
+
+  useEffect(() => {
+    console.log(timer);
+    console.log(mode);
+  }, [timer]);
 
   const contextValue = {
     user,
