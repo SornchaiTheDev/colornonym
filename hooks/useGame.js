@@ -17,11 +17,10 @@
  *
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 function useGame(props) {
-  const { resetTimer, randomColor, minusTimer } = props;
+  const { timer, resetTimer, randomColor, minusTimer, setMode } = props;
   const [score, setScore] = useState(0);
-  const [mode, setMode] = useState("EASY");
 
   const addScore = () => {
     setScore(score + 1);
@@ -33,17 +32,11 @@ function useGame(props) {
     return;
   };
   const wrong = () => {
-    minusTimer(3);
-    return;
+    if (timer > 0) return minusTimer();
+    setMode("GAME_OVER");
   };
-  useEffect(() => {
-    if (score >= 20 && score <= 40) setMode("NORMAL");
-    if (score > 40 && score <= 60) setMode("HARD");
-    if (score > 60 && score <= 80) setMode("INSANE");
-    if (score > 80 && score <= 100) setMode("GOD");
-  }, [score]);
 
-  return { score, addScore, mode, correct, wrong };
+  return { score, addScore, setScore, correct, wrong };
 }
 
 export default useGame;

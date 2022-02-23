@@ -18,7 +18,8 @@ function SVGColorBtn({ color }) {
 
 function ColorBtn({ color, isCorrect }) {
   // Get Context Value
-  const { startTimer, timer, isStart, correct, wrong } = useContext(Context);
+  const { startTimer, timer, isStart, correct, wrong, mode, setMode } =
+    useContext(Context);
 
   // Convert Svg to base64
   const svgBtn = encodeURIComponent(
@@ -26,27 +27,19 @@ function ColorBtn({ color, isCorrect }) {
       renderToStaticMarkup(<SVGColorBtn color={color} timer={timer} />)
     )
   );
-  const [solution, setSolution] = useState(false);
-
-  useEffect(() => {
-    if (timer <= 0) setSolution(true);
-  }, [timer]);
 
   // Validate if user press the right color
   const validateColor = () => {
-    if (timer <= 0) return;
-    if (!isStart) startTimer(10);
-    if (isCorrect) {
-      correct();
-    } else {
-      wrong();
-    }
+    if (mode === "GAME_OVER" && isCorrect) return setMode("RESET");
+    if (!isStart) startTimer();
+    if (isCorrect) return correct();
+    wrong();
   };
 
   return (
     <img
       className={`place-self-stretch w-full rounded-full ${
-        solution && isCorrect && "bg-white"
+        mode === "GAME_OVER" && isCorrect && "bg-white"
       }`}
       onClick={validateColor}
       src={`data:image/svg+xml;base64,${svgBtn}`}

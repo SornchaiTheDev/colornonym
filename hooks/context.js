@@ -9,6 +9,7 @@ export const Context = createContext(null);
 function ContextProvider({ children }) {
   const [columnScore, setColumnScore] = useState(0);
   const [column, setColumn] = useState(2);
+  const [mode, setMode] = useState("EASY");
   const {
     setMaxTimer,
     timer,
@@ -18,15 +19,25 @@ function ContextProvider({ children }) {
     setMinusTime,
     maxTimer,
     isStart,
-  } = useTimer();
+  } = useTimer({ mode, setMode });
   const { colors, correctIndex, randomColor } = useColor({ columnScore });
-  const { score, addScore, mode, correct, wrong } = useGame({
+  const { score, addScore, correct, wrong, setScore } = useGame({
+    timer,
+    startTimer,
     resetTimer,
     randomColor,
     minusTimer,
     maxTimer,
+    setMode,
   });
   const user = { name: "โชกุนนน", score: 10 };
+
+  useEffect(() => {
+    if (score >= 20 && score <= 40) setMode("NORMAL");
+    if (score > 40 && score <= 60) setMode("HARD");
+    if (score > 60 && score <= 80) setMode("INSANE");
+    if (score > 80 && score <= 100) setMode("GOD");
+  }, [score]);
 
   useEffect(() => {
     setColumnScore(score);
@@ -52,13 +63,15 @@ function ContextProvider({ children }) {
       case "GOD":
         setMaxTimer(1);
         break;
-    }
-  }, [score]);
+      case "RESET":
+        setScore(0);
+        setMode("EASY");
+        randomColor();
+        resetTimer();
 
-  useEffect(() => {
-    console.log(timer);
-    console.log(mode);
-  }, [timer]);
+        break;
+    }
+  }, [score, mode]);
 
   const contextValue = {
     user,
@@ -76,6 +89,8 @@ function ContextProvider({ children }) {
     column,
     correct,
     wrong,
+    mode,
+    setMode,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
