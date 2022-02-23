@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Context } from "../hooks/context";
 
-function SVGColorBtn({ color, timer }) {
+function SVGColorBtn({ color }) {
   return (
     <>
       <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
@@ -18,17 +18,7 @@ function SVGColorBtn({ color, timer }) {
 
 function ColorBtn({ color, isCorrect }) {
   // Get Context Value
-  const {
-    startTimer,
-    resetTimer,
-    randomColor,
-    addScore,
-    minusTimer,
-    timer,
-    isStart,
-    correct,
-    wrong,
-  } = useContext(Context);
+  const { startTimer, timer, isStart, correct, wrong } = useContext(Context);
 
   // Convert Svg to base64
   const svgBtn = encodeURIComponent(
@@ -37,13 +27,15 @@ function ColorBtn({ color, isCorrect }) {
     )
   );
   const [solution, setSolution] = useState(false);
+
   useEffect(() => {
     if (timer <= 0) setSolution(true);
   }, [timer]);
+
   // Validate if user press the right color
   const validateColor = () => {
     if (timer <= 0) return;
-    if (!isStart) startTimer(3);
+    if (!isStart) startTimer(10);
     if (isCorrect) {
       correct();
     } else {

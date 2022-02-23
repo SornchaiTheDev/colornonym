@@ -26,6 +26,7 @@ export default function useTimer() {
     setMaxTimer(seconds);
     setInitialTime(new Date(Date.now() + seconds * 1000).getTime());
   };
+  
   const minusTimer = (time) => {
     setTimer((prev) => prev - time);
     setInitialTime((prev) => new Date(prev - time * 1000).getTime());

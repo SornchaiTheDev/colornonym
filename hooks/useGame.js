@@ -19,7 +19,7 @@
 
 import { useEffect, useState } from "react";
 function useGame(props) {
-  const { resetTimer, randomColor } = props;
+  const { resetTimer, randomColor, minusTimer } = props;
   const [score, setScore] = useState(0);
   const [mode, setMode] = useState("EASY");
 
@@ -27,13 +27,13 @@ function useGame(props) {
     setScore(score + 1);
   };
   const correct = () => {
-    resetTimer(3);
+    resetTimer(10);
     addScore();
     randomColor();
     return;
   };
   const wrong = () => {
-    // minusTimer(3);
+    minusTimer(3);
     return;
   };
   useEffect(() => {
