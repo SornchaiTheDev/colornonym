@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import useTimer from "./useTimer";
 import useColor from "./useColor";
+import { blink } from "./utils";
 
 // Context Initial
 export const Context = createContext(null);
@@ -45,7 +46,7 @@ function ContextProvider({ children }) {
     // if (score > 40 && score <= 60) setMode("HARD");
     // if (score > 60 && score <= 80) setMode("INSANE");
     // if (score > 80 && score <= 100) setMode("GOD");
-
+    let blink;
     switch (mode) {
       case "EASY":
         randomColor(column);
@@ -59,8 +60,9 @@ function ContextProvider({ children }) {
         break;
       case "HARD":
         randomColor(column);
-        setMaxTimer(3);
-        setMinusTime(3);
+        setMaxTimer(10);
+        setMinusTime(4);
+        blink = setInterval(() => randomColor(column), 2 * 1000);
         break;
       case "INSANE":
         randomColor(column);
@@ -74,7 +76,7 @@ function ContextProvider({ children }) {
         setMode("EASY");
         break;
     }
-    console.log(mode);
+    return () => clearInterval(blink);
   }, [score, mode, column]);
 
   const contextValue = {

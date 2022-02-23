@@ -1,3 +1,3 @@
 export function blink(seconds, fn) {
-  setTimeout(() => fn(), seconds * 1000);
+  return setInterval(() => fn(), seconds * 1000);
 }
