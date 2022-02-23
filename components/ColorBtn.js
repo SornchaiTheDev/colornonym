@@ -25,27 +25,24 @@ function ColorBtn({ color, isCorrect }) {
     addScore,
     minusTimer,
     timer,
-    column,
+    isStart,
     score,
+    correct,
+    wrong,
   } = useContext(Context);
 
   // Convert Svg to base64
   const svgBtn = encodeURIComponent(
     window.btoa(renderToStaticMarkup(<SVGColorBtn color={color} />))
   );
-
   // Validate if user press the right color
   const validateColor = () => {
-    console.log(column);
     if (timer <= 0) return;
-    startTimer();
+    if (!isStart) startTimer(10);
     if (isCorrect) {
-      resetTimer();
-      addScore();
-      randomColor(score);
+      correct();
     } else {
-      startTimer();
-      minusTimer(3);
+      wrong();
     }
   };
 

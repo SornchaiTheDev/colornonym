@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 export default function useTimer() {
   const [initialTime, setInitialTime] = useState(null);
   const [timer, setTimer] = useState(10);
+  const [maxTimer, setMaxTimer] = useState(10);
   const [isStart, setIsStart] = useState(false);
 
   // Countdown Function
@@ -19,10 +20,11 @@ export default function useTimer() {
     return () => clearInterval(count);
   }, [timer, isStart, initialTime]);
 
-  const startTimer = () => {
-    if (isStart) return;
+  const startTimer = (seconds = 10) => {
+    // if (isStart && seconds === null) return;
     setIsStart(true);
-    setInitialTime(new Date(Date.now() + 10000).getTime());
+    setMaxTimer(seconds);
+    setInitialTime(new Date(Date.now() + seconds * 1000).getTime());
   };
   const minusTimer = (time) => {
     setTimer((prev) => prev - time);
@@ -34,5 +36,5 @@ export default function useTimer() {
     setInitialTime(new Date(Date.now() + 10000).getTime());
   };
 
-  return { timer, startTimer, resetTimer, minusTimer };
+  return { timer, startTimer, resetTimer, minusTimer, maxTimer, isStart };
 }
