@@ -26,7 +26,6 @@ function ColorBtn({ color, isCorrect }) {
     minusTimer,
     timer,
     isStart,
-    score,
     correct,
     wrong,
   } = useContext(Context);
@@ -48,8 +47,7 @@ function ColorBtn({ color, isCorrect }) {
 
   return (
     <img
-      // className="place-self-stretch"
-      style={{ width: "100%" /*height: "100%"*/ }}
+      className="place-self-stretch w-full"
       onClick={validateColor}
       src={`data:image/svg+xml;base64,${svgBtn}`}
     />

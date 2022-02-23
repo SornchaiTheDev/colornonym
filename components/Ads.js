@@ -1,7 +1,11 @@
 import React from "react";
 
 function Ads() {
-  return <div className="mt-6 w-full h-16 bg-white text-center">Ads</div>;
+  return (
+    <div className="w-full h-16 bg-white text-center flex justify-center items-center">
+      Ads
+    </div>
+  );
 }
 
 export default Ads;
