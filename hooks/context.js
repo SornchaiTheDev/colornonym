@@ -15,6 +15,7 @@ function ContextProvider({ children }) {
     randomColor,
     minusTimer,
   });
+  const user = { name: "โชกุนนน", score: 10 };
   const [column, setColumn] = useState(2);
   useEffect(() => {
     setColumn(Math.floor(score / 5) + 2);
@@ -34,6 +35,7 @@ function ContextProvider({ children }) {
   }, [score]);
 
   const contextValue = {
+    user,
     isStart,
     timer,
     startTimer,

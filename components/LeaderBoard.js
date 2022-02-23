@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../hooks/context";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import Ads from "./Ads";
 
 function Player({ name, score, place, country, fullCountry }) {
   return (
-    <div className="w-3/4 flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-4 mb-2">
+    <div className="w-11/12 flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-4 mb-2">
       <div className="flex items-center space-x-2">
         <h1>{place}</h1>
         <div className="flex flex-col">
@@ -19,7 +20,7 @@ function Player({ name, score, place, country, fullCountry }) {
     </div>
   );
 }
-function Me({ name, score, place, country, fullCountry }) {
+function Me({ name, score, place, country, fullCountry, isShow }) {
   const Username = () => {
     const [username, setUsername] = useState(name);
     const [isClick, setIsClick] = useState(false);
@@ -29,17 +30,23 @@ function Me({ name, score, place, country, fullCountry }) {
           className="font-medium outline-none"
           value={username}
           autoFocus
+          onBlur={() => setIsClick(false)}
           onChange={(e) => setUsername(e.target.value)}
         />
       );
     return (
       <h1 className="font-medium" onClick={() => setIsClick(true)}>
-        {name} (Tap to change)
+        {username} (Tap to change)
       </h1>
     );
   };
   return (
-    <div className="flex justify-between items-center bg-white shadow-md px-6 py-4 border-t-2 mt-4">
+    <div
+      className={`${
+        isShow ? "flex" : "hidden"
+      } justify-between items-center bg-white px-6 py-4 rounded-t-2xl`}
+      style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)"}}
+    >
       <div className="flex items-center space-x-4">
         <h1>{place}</h1>
         <div className="flex flex-col">
@@ -57,6 +64,7 @@ function Me({ name, score, place, country, fullCountry }) {
 
 function LeaderBoard() {
   const [isShow, setIsShow] = useState(false);
+  const { user } = useContext(Context);
   return (
     <div className="fixed bottom-0 w-full md:w-1/2 bg-white rounded-t-2xl pt-4">
       <button
@@ -106,14 +114,36 @@ function LeaderBoard() {
           country="US"
           fullCountry="United States"
         />
-        <Me
-          name="User0123"
-          place={1}
-          score={10}
-          country="TH"
-          fullCountry="Thailand"
+        <Player
+          name="John Doe"
+          place={2}
+          score={5}
+          country="US"
+          fullCountry="United States"
+        />
+        <Player
+          name="John Doe"
+          place={2}
+          score={5}
+          country="US"
+          fullCountry="United States"
+        />
+        <Player
+          name="John Doe"
+          place={2}
+          score={5}
+          country="US"
+          fullCountry="United States"
         />
       </div>
+      <Me
+        isShow={isShow}
+        name={user.name}
+        place={1}
+        score={user.score}
+        country="TH"
+        fullCountry="Thailand"
+      />
       <Ads />
     </div>
   );
