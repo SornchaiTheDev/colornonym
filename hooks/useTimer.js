@@ -23,6 +23,10 @@ export default function useTimer({ mode, setMode }) {
     return () => clearInterval(count);
   }, [timer, isStart, initialTime]);
 
+  useEffect(() => {
+    resetTimer();
+  }, [maxTimer]);
+
   const startTimer = () => {
     setIsStart(true);
     setInitialTime(Date.now() + maxTimer * 1000);
@@ -35,7 +39,6 @@ export default function useTimer({ mode, setMode }) {
 
   const resetTimer = () => {
     setTimer(maxTimer);
-    setMaxTimer(timer);
     setInitialTime(Date.now() + maxTimer * 1000);
   };
 

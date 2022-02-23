@@ -16,27 +16,16 @@
  *
  *
  */
-
-import { useState } from "react";
 function useGame(props) {
-  const { timer, resetTimer, randomColor, minusTimer, setMode } = props;
-  const [score, setScore] = useState(0);
+  const {
+    setScore,
+    timer,
+    resetTimer,
+    minusTimer,
+    setMode,
+  } = props;
 
-  const addScore = () => {
-    setScore(score + 1);
-  };
-  const correct = () => {
-    resetTimer();
-    addScore();
-    randomColor();
-    return;
-  };
-  const wrong = () => {
-    if (timer > 0) return minusTimer();
-    setMode("GAME_OVER");
-  };
-
-  return { score, addScore, setScore, correct, wrong };
+  return { correct, wrong };
 }
 
 export default useGame;

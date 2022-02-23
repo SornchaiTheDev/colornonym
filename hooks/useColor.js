@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Context } from "./context";
+import { useState } from "react";
 
 function hslToHex(h, s, l) {
   l /= 100;
@@ -14,20 +13,11 @@ function hslToHex(h, s, l) {
   return `#${f(0)}${f(8)}${f(4)}`;
 }
 
-function useColor({ columnScore }) {
+function useColor() {
   const [colors, setColors] = useState([]);
   const [correctIndex, setCorrectIndex] = useState(0);
 
-  useEffect(() => {
-    randomColor(columnScore);
-  }, []);
-
-  const randomColor = () => {
-    const column =
-      Math.floor(columnScore / 5) + 2 <= 5
-        ? Math.floor(columnScore / 5) + 2
-        : 5;
-
+  const randomColor = (column) => {
     let colorsArray = new Array(column ** 2).fill("");
     const random = Math.floor(Math.random() * 360);
     colorsArray.forEach((_, index) => {

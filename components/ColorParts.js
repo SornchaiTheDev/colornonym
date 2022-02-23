@@ -7,7 +7,7 @@ function ColorParts() {
 
   return (
     <div
-      className={`w-full md:w-1/2 grid items-center justify-center gap-4 mt-6 `}
+      className={`w-full md:w-1/2 grid items-center justify-center gap-0 mt-6 `}
       style={{
         gridTemplateColumns: `repeat(${column}, minmax(0, 1fr))`,
         gridAutoFlow: true,

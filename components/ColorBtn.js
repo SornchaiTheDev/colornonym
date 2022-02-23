@@ -5,11 +5,11 @@ import { Context } from "../hooks/context";
 function SVGColorBtn({ color }) {
   return (
     <>
-      <svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
         <title>ColorBtn</title>
         <g id="Layer_1">
           <title>Layer 1</title>
-          <circle id="svg_1" cx="25" cy="25" r="21" fill={color} />
+          <circle id="svg_1" cx="50" cy="50" r="50" fill={color} />
         </g>
       </svg>
     </>
@@ -38,7 +38,7 @@ function ColorBtn({ color, isCorrect }) {
 
   return (
     <img
-      className={`place-self-stretch w-full rounded-full ${
+      className={`place-self-stretch w-full p-1 rounded-full ${
         mode === "GAME_OVER" && isCorrect && "bg-white"
       }`}
       onClick={validateColor}
