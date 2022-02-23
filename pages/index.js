@@ -9,7 +9,7 @@ function index() {
   return (
     <ContextProvider>
       <Head>
-        <title>ItsTheSameOne</title>
+        <title>Colornonym</title>
       </Head>
       <div className="flex flex-col justify-start items-center bg-primary min-h-screen ">
         <div className="w-3/4 md:w-1/2 flex flex-col items-center">

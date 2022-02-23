@@ -14,16 +14,19 @@ function hslToHex(h, s, l) {
   return `#${f(0)}${f(8)}${f(4)}`;
 }
 
-function useColor() {
+function useColor({ columnScore }) {
   const [colors, setColors] = useState([]);
   const [correctIndex, setCorrectIndex] = useState(0);
 
   useEffect(() => {
-    randomColor(2);
+    randomColor(columnScore);
   }, []);
 
-  const randomColor = (score) => {
-    const column = Math.floor((score + 1) / 5) + 2;
+  const randomColor = () => {
+    const column =
+      Math.floor(columnScore / 5) + 2 <= 5
+        ? Math.floor(columnScore / 5) + 2
+        : 5;
 
     let colorsArray = new Array(column ** 2).fill("");
     const random = Math.floor(Math.random() * 360);

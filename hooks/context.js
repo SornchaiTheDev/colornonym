@@ -7,18 +7,23 @@ import useGame from "./useGame";
 export const Context = createContext(null);
 
 function ContextProvider({ children }) {
+  const [columnScore, setColumnScore] = useState(0);
+  const [column, setColumn] = useState(2);
   const { timer, startTimer, resetTimer, minusTimer, maxTimer, isStart } =
     useTimer();
-  const { colors, correctIndex, randomColor } = useColor();
+  const { colors, correctIndex, randomColor } = useColor({ columnScore });
   const { score, addScore, mode, correct, wrong } = useGame({
     resetTimer,
     randomColor,
     minusTimer,
   });
   const user = { name: "โชกุนนน", score: 10 };
-  const [column, setColumn] = useState(2);
+
   useEffect(() => {
-    setColumn(Math.floor(score / 5) + 2);
+    setColumnScore(score);
+    setColumn(
+      Math.floor(columnScore / 5) + 2 <= 5 ? Math.floor(columnScore / 5) + 2 : 5
+    );
     switch (mode) {
       case "NORMAL":
         startTimer(5);
@@ -51,10 +56,6 @@ function ContextProvider({ children }) {
     correct,
     wrong,
   };
-  useEffect(() => {
-    // console.log(timer);
-    if (timer <= 0) alert("Game Over!");
-  }, [timer]);
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 }

@@ -21,8 +21,8 @@ export default function useTimer() {
   }, [timer, isStart, initialTime]);
 
   const startTimer = (seconds = 10) => {
-    // if (isStart && seconds === null) return;
     setIsStart(true);
+    setTimer(seconds);
     setMaxTimer(seconds);
     setInitialTime(new Date(Date.now() + seconds * 1000).getTime());
   };
@@ -31,9 +31,10 @@ export default function useTimer() {
     setInitialTime((prev) => new Date(prev - time * 1000).getTime());
   };
 
-  const resetTimer = () => {
-    setTimer(10);
-    setInitialTime(new Date(Date.now() + 10000).getTime());
+  const resetTimer = (seconds = 10) => {
+    setTimer(seconds);
+    setMaxTimer(seconds);
+    setInitialTime(new Date(Date.now() + seconds * 1000).getTime());
   };
 
   return { timer, startTimer, resetTimer, minusTimer, maxTimer, isStart };

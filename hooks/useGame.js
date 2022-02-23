@@ -27,9 +27,9 @@ function useGame(props) {
     setScore(score + 1);
   };
   const correct = () => {
-    resetTimer();
+    resetTimer(3);
     addScore();
-    randomColor(score);
+    randomColor();
     return;
   };
   const wrong = () => {
