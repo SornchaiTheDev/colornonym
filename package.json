@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "country-flag-icons": "^1.4.21",
+    "firebase": "^9.6.7",
     "next": "12.1.0",
     "react": "17.0.2",
     "react-circular-progressbar": "^2.0.4",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.2",

@@ -45,7 +45,7 @@ function Me({ name, score, place, country, fullCountry, isShow }) {
       className={`${
         isShow ? "flex" : "hidden"
       } justify-between items-center bg-white px-6 py-4 rounded-t-2xl`}
-      style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)"}}
+      style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)" }}
     >
       <div className="flex items-center space-x-4">
         <h1>{place}</h1>
@@ -138,9 +138,9 @@ function LeaderBoard() {
       </div>
       <Me
         isShow={isShow}
-        name={user.name}
+        name={user}
         place={1}
-        score={user.score}
+        score={0}
         country="TH"
         fullCountry="Thailand"
       />

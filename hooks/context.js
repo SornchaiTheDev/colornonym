@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import useTimer from "./useTimer";
 import useColor from "./useColor";
+import useAuth from "./useAuth";
 
 // Context Initial
 export const Context = createContext(null);
@@ -9,6 +10,12 @@ function ContextProvider({ children }) {
   const [score, setScore] = useState(0);
   const [column, setColumn] = useState(2);
   const [mode, setMode] = useState("EASY");
+  const { user } = useAuth();
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
+
   const {
     setMaxTimer,
     timer,
@@ -23,8 +30,6 @@ function ContextProvider({ children }) {
     score,
   });
 
-  const user = { name: "โชกุนนน", score: 10 };
-
   const correct = () => {
     setScore((prev) => prev + 1);
     resetTimer();
@@ -37,13 +42,9 @@ function ContextProvider({ children }) {
   useEffect(() => {
     if (score > 0 && score % 5 == 0 && column <= 4)
       setColumn((prev) => prev + 1);
-    if (score >= 5 && score <= 10) setMode("NORMAL");
-    if (score >= 10 && score <= 15) setMode("HARD");
-    if (score >= 16 && score <= 21) setMode("INSANE");
-    // if (score >= 5 && score <= 40) setMode("NORMAL");
-    // if (score > 40 && score <= 60) setMode("HARD");
-    // if (score > 60 && score <= 80) setMode("INSANE");
-    // if (score > 80 && score <= 100) setMode("GOD");
+    if (score >= 5 && score <= 40) setMode("NORMAL");
+    if (score > 40 && score <= 60) setMode("HARD");
+    if (score > 60 && score <= 80) setMode("INSANE");
   }, [score]);
 
   useEffect(() => {
@@ -73,15 +74,15 @@ function ContextProvider({ children }) {
         setMaxTimer(2);
         setMinusTime(1);
         break;
-      case "RESET":
+      case "GAME_OVER":
         stopBlink();
+        break;
+      case "RESET":
         setScore(0);
         setColumn(2);
         resetTimer();
         setMode("EASY");
         break;
-      default:
-      // stopBlink();
     }
   }, [score, mode, column]);
 
