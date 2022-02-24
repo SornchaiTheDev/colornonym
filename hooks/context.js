@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import useTimer from "./useTimer";
 import useColor from "./useColor";
-import { blink } from "./utils";
 
 // Context Initial
 export const Context = createContext(null);
@@ -20,7 +19,9 @@ function ContextProvider({ children }) {
     maxTimer,
     isStart,
   } = useTimer({ mode, setMode, column });
-  const { colors, correctIndex, randomColor } = useColor({ score });
+  const { colors, correctIndex, randomColor, blink, stopBlink } = useColor({
+    score,
+  });
 
   const user = { name: "โชกุนนน", score: 10 };
 
@@ -39,14 +40,14 @@ function ContextProvider({ children }) {
     if (score >= 5 && score <= 10) setMode("NORMAL");
     if (score >= 10 && score <= 15) setMode("HARD");
     if (score >= 16 && score <= 21) setMode("INSANE");
-  }, [score]);
-
-  useEffect(() => {
     // if (score >= 5 && score <= 40) setMode("NORMAL");
     // if (score > 40 && score <= 60) setMode("HARD");
     // if (score > 60 && score <= 80) setMode("INSANE");
     // if (score > 80 && score <= 100) setMode("GOD");
-    let blink;
+  }, [score]);
+
+  useEffect(() => {
+    console.log(mode);
     switch (mode) {
       case "EASY":
         randomColor(column);
@@ -57,26 +58,31 @@ function ContextProvider({ children }) {
         randomColor(column);
         setMaxTimer(5);
         setMinusTime(3);
+        blink(2, column);
         break;
       case "HARD":
+        stopBlink();
         randomColor(column);
         setMaxTimer(10);
         setMinusTime(4);
-        blink = setInterval(() => randomColor(column), 2 * 1000);
+        blink(1, column);
         break;
       case "INSANE":
+        stopBlink();
         randomColor(column);
         setMaxTimer(2);
         setMinusTime(1);
         break;
       case "RESET":
+        stopBlink();
         setScore(0);
         setColumn(2);
         resetTimer();
         setMode("EASY");
         break;
+      default:
+      // stopBlink();
     }
-    return () => clearInterval(blink);
   }, [score, mode, column]);
 
   const contextValue = {
