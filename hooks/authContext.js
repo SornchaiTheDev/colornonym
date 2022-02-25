@@ -6,6 +6,7 @@ import {
   doc,
   updateDoc,
   setDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { app } from "../firebase.config.js";
 import Cookies from "universal-cookie";
@@ -15,7 +16,7 @@ export const AuthCtx = createContext(null);
 const cookies = new Cookies();
 
 function authContext({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const userId = cookies.get("user");
 
   // init firebase instance
@@ -48,8 +49,10 @@ function authContext({ children }) {
 
   const getUser = (userId) => {
     const userDoc = doc(firestore, "users", userId);
-    getDoc(userDoc).then((user) => {
-      setUser((prev) => ({ ...prev, ...user.data(), uid: user.id }));
+    onSnapshot(userDoc, (user) => {
+      if (user.name === undefined) {
+        setUser((prev) => ({ ...prev, ...user.data(), uid: user.id }));
+      }
     });
   };
 

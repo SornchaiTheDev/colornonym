@@ -58,7 +58,7 @@ function Me({ isShow }) {
     );
   };
 
-  if (user === null)
+  if (user.name === undefined)
     return (
       <div
         className={`${
