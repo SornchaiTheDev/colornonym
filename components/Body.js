@@ -13,7 +13,7 @@ function Body() {
         column < 4 ? "w-3/4" : "w-10/12"
       } md:w-1/2 flex flex-col items-center`}
     >
-      <h1 className="text-4xl font-bold text-white mt-4">Coloronym</h1>
+      <h1 className="text-4xl font-bold text-white mt-4">Colornonym</h1>
       <h4 className="text-white mt-2 mb-4 font-bold">
         by{" "}
         <a

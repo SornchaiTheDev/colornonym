@@ -1,7 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import useTimer from "./useTimer";
 import useColor from "./useColor";
-import useAuth from "./useAuth";
 
 // Context Initial
 export const Context = createContext(null);
@@ -10,11 +9,6 @@ function ContextProvider({ children }) {
   const [score, setScore] = useState(0);
   const [column, setColumn] = useState(2);
   const [mode, setMode] = useState("EASY");
-  const { user } = useAuth();
-
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
 
   const {
     setMaxTimer,
@@ -87,7 +81,6 @@ function ContextProvider({ children }) {
   }, [score, mode, column]);
 
   const contextValue = {
-    user,
     isStart,
     timer,
     startTimer,

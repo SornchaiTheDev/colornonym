@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.26.0",
     "country-flag-icons": "^1.4.21",
     "firebase": "^9.6.7",
     "next": "12.1.0",

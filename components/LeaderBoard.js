@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../hooks/context";
+import { AuthCtx } from "../hooks/authContext";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import Ads from "./Ads";
+import useLeaderboard from "../hooks/useLeaderboard";
 
 function Player({ name, score, place, country, fullCountry }) {
   return (
@@ -24,13 +26,19 @@ function Me({ name, score, place, country, fullCountry, isShow }) {
   const Username = () => {
     const [username, setUsername] = useState(name);
     const [isClick, setIsClick] = useState(false);
+    const { changeUsername } = useContext(AuthCtx);
+    const onBlur = () => {
+      setIsClick(false);
+      changeUsername(username);
+    };
+
     if (isClick)
       return (
         <input
           className="font-medium outline-none"
           value={username}
           autoFocus
-          onBlur={() => setIsClick(false)}
+          onBlur={onBlur}
           onChange={(e) => setUsername(e.target.value)}
         />
       );
@@ -64,9 +72,10 @@ function Me({ name, score, place, country, fullCountry, isShow }) {
 
 function LeaderBoard() {
   const [isShow, setIsShow] = useState(false);
-  const { user } = useContext(Context);
+  const { user } = useContext(AuthCtx);
+  const { users } = useLeaderboard();
   return (
-    <div className="fixed bottom-0 w-full md:w-1/2 bg-white rounded-t-2xl pt-4">
+    <div className="fixed bottom-0 w-full md:w-4/12 bg-white rounded-t-2xl pt-4">
       <button
         className="w-full px-10 flex justify-between items-center space-x-2"
         onClick={() => setIsShow(!isShow)}
@@ -81,64 +90,24 @@ function LeaderBoard() {
       </button>
       <hr className="my-2" />
       <div
+        id="leaderboard"
         className={`${
           isShow ? "flex" : "hidden "
         } flex-col items-center h-64 overflow-y-scroll`}
       >
-        <Player
-          name="โชกุนนน"
-          place={1}
-          score={10}
-          country="TH"
-          fullCountry="Thailand"
-        />
-
-        <Player
-          name="John Doe"
-          place={2}
-          score={5}
-          country="US"
-          fullCountry="United States"
-        />
-        <Player
-          name="John Doe"
-          place={2}
-          score={5}
-          country="US"
-          fullCountry="United States"
-        />
-        <Player
-          name="John Doe"
-          place={2}
-          score={5}
-          country="US"
-          fullCountry="United States"
-        />
-        <Player
-          name="John Doe"
-          place={2}
-          score={5}
-          country="US"
-          fullCountry="United States"
-        />
-        <Player
-          name="John Doe"
-          place={2}
-          score={5}
-          country="US"
-          fullCountry="United States"
-        />
-        <Player
-          name="John Doe"
-          place={2}
-          score={5}
-          country="US"
-          fullCountry="United States"
-        />
+        {users.map(({ name, score, country, fullCountry }, index) => (
+          <Player
+            name={name}
+            place={index}
+            score={score}
+            country={country}
+            fullCountry={fullCountry}
+          />
+        ))}
       </div>
       <Me
         isShow={isShow}
-        name={user}
+        name={user !== null ? user.name : "loading..."}
         place={1}
         score={0}
         country="TH"
