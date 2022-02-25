@@ -22,25 +22,32 @@ function Player({ name, score, place, country, fullCountry }) {
     </div>
   );
 }
-function Me({ name, score, place, country, fullCountry, isShow }) {
+function Me({ user, isShow }) {
   const Username = () => {
-    const [username, setUsername] = useState(name);
+    const [username, setUsername] = useState(user.name);
     const [isClick, setIsClick] = useState(false);
     const { changeUsername } = useContext(AuthCtx);
-    const onBlur = () => {
+    const onBlur = (e) => {
       setIsClick(false);
+      changeUsername(username);
+    };
+    
+    const onSubmit = (e) => {
+      e.preventDefault();
       changeUsername(username);
     };
 
     if (isClick)
       return (
-        <input
-          className="font-medium outline-none"
-          value={username}
-          autoFocus
-          onBlur={onBlur}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <form onSubmit={onSubmit}>
+          <input
+            className="font-medium outline-none"
+            value={username}
+            autoFocus
+            onBlur={onBlur}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </form>
       );
     return (
       <h1 className="font-medium" onClick={() => setIsClick(true)}>
@@ -48,6 +55,27 @@ function Me({ name, score, place, country, fullCountry, isShow }) {
       </h1>
     );
   };
+  if (user === null)
+    return (
+      <div
+        className={`${
+          isShow ? "flex" : "hidden"
+        } justify-between items-center bg-white px-6 py-4 rounded-t-2xl animate-pulse`}
+        style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)" }}
+      >
+        <div className="w-full flex items-center space-x-4">
+          <div className="w-8 h-8 bg-gray-300  rounded-full"></div>
+          <div className="w-full flex flex-col">
+            <div className="w-3/6 h-4 bg-gray-300 rounded-full"></div>
+            <div className="flex space-x-1 mt-2">
+              <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
+              <div className="w-28 h-4 bg-gray-300 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
+      </div>
+    );
   return (
     <div
       className={`${
@@ -56,16 +84,16 @@ function Me({ name, score, place, country, fullCountry, isShow }) {
       style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)" }}
     >
       <div className="flex items-center space-x-4">
-        <h1>{place}</h1>
+        <h1>1</h1>
         <div className="flex flex-col">
           <Username />
           <div className="flex space-x-1">
-            <h1 className="">{getUnicodeFlagIcon(country)}</h1>
-            <h3 className="font-normal">{fullCountry}</h3>
+            <h1 className="">{getUnicodeFlagIcon(user.country.code)}</h1>
+            <h3 className="font-normal">{user.country.name}</h3>
           </div>
         </div>
       </div>
-      <h1 className="font-bold">{score}</h1>
+      <h1 className="font-bold">{user.score}</h1>
     </div>
   );
 }
@@ -107,7 +135,8 @@ function LeaderBoard() {
       </div>
       <Me
         isShow={isShow}
-        name={user !== null ? user.name : "loading..."}
+        user={user}
+        name={user !== null && user.name.length > 0 ? user.name : "Loading..."}
         place={1}
         score={0}
         country="TH"
