@@ -17,8 +17,8 @@ const cookies = new Cookies();
 function authContext({ children }) {
   const [user, setUser] = useState(null);
   const userId = cookies.get("user");
-  // init firestore
 
+  // init firebase instance
   const firestore = getFirestore(app);
   const auth = getAuth(app);
   const authentication = async () => {
