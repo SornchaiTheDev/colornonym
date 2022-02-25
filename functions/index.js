@@ -1,5 +1,6 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const cors = require("cors");
 
 admin.initializeApp();
 exports.userCreated = functions.auth.user().onCreate(async (user) => {
@@ -292,18 +293,24 @@ function getCountry(code) {
   return "unknown";
 }
 
-// const whitelist = ["localhost:3000"];
+const whitelist = ["http://localhost:3000", "http://192.168.1.5:3000"];
 
-// function originWhitelist(req, callback) {
-//   let origin = { origin: false };
-//   if (whitelist.includes(req.headers("Origin"))) {
-//     origin = { origin: true };
-//   }
-//   callback(null, origin);
-// }
+/**
+ *
+ * @param {*} req get user headers
+ * @param {*} callback return cors options
+ *
+ */
+function originWhitelist(req, callback) {
+  let origin = { origin: false };
+  if (whitelist.includes(req.header("origin"))) {
+    origin = { origin: true };
+  }
+  callback(null, origin);
+}
 
-exports.getUserLocation = functions.https.onRequest(async (req, res) => {
+exports.getUserLocation = functions.https.onRequest((req, res) => {
   const country = req.headers["x-appengine-country"];
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.json(getCountry(country));
+  const corshandler = cors(originWhitelist);
+  corshandler(req, res, () => res.json(getCountry(country)));
 });
