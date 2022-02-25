@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
-import { Context } from "../hooks/context";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthCtx } from "../hooks/authContext";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import Ads from "./Ads";
 import useLeaderboard from "../hooks/useLeaderboard";
+import Cookies from "universal-cookie";
 
 function Player({ name, score, place, country, fullCountry }) {
   return (
@@ -22,16 +22,18 @@ function Player({ name, score, place, country, fullCountry }) {
     </div>
   );
 }
-function Me({ user, isShow }) {
+function Me({ isShow }) {
+  const { user } = useContext(AuthCtx);
+
   const Username = () => {
     const [username, setUsername] = useState(user.name);
     const [isClick, setIsClick] = useState(false);
     const { changeUsername } = useContext(AuthCtx);
-    const onBlur = (e) => {
+    const onBlur = () => {
       setIsClick(false);
       changeUsername(username);
     };
-    
+
     const onSubmit = (e) => {
       e.preventDefault();
       changeUsername(username);
@@ -55,6 +57,7 @@ function Me({ user, isShow }) {
       </h1>
     );
   };
+
   if (user === null)
     return (
       <div
@@ -100,10 +103,9 @@ function Me({ user, isShow }) {
 
 function LeaderBoard() {
   const [isShow, setIsShow] = useState(false);
-  const { user } = useContext(AuthCtx);
   const { users } = useLeaderboard();
   return (
-    <div className="fixed bottom-0 w-full md:w-4/12 bg-white rounded-t-2xl pt-4">
+    <div className="fixed bottom-0 w-full  md:w-4/12 bg-white rounded-t-2xl pt-4">
       <button
         className="w-full px-10 flex justify-between items-center space-x-2"
         onClick={() => setIsShow(!isShow)}
@@ -135,12 +137,11 @@ function LeaderBoard() {
       </div>
       <Me
         isShow={isShow}
-        user={user}
-        name={user !== null && user.name.length > 0 ? user.name : "Loading..."}
-        place={1}
-        score={0}
-        country="TH"
-        fullCountry="Thailand"
+        // name={user !== null && user.name.length > 0 ? user.name : "Loading..."}
+        // place={1}
+        // score={0}
+        // country="TH"
+        // fullCountry="Thailand"
       />
       <Ads />
     </div>

@@ -16,10 +16,13 @@ exports.userCreated = functions.auth.user().onCreate(async (user) => {
     .firestore()
     .collection("users")
     .doc(uid)
-    .set({
-      name: `User#${amount.toString().padStart(4, "0")}`,
-      score: 0,
-    })
+    .set(
+      {
+        name: `User#${amount.toString().padStart(4, "0")}`,
+        score: 0,
+      },
+      { merge: true }
+    )
     .then(() =>
       admin
         .firestore()

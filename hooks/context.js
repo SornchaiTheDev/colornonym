@@ -42,7 +42,7 @@ function ContextProvider({ children }) {
   }, [score]);
 
   useEffect(() => {
-    console.log(mode);
+    // console.log(mode);
     switch (mode) {
       case "EASY":
         randomColor(column);

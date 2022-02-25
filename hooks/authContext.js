@@ -1,6 +1,12 @@
 import { useState, useEffect, createContext } from "react";
 import { getAuth, signInAnonymously } from "firebase/auth";
-import { getFirestore, getDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  getDoc,
+  doc,
+  updateDoc,
+  setDoc,
+} from "firebase/firestore";
 import { app } from "../firebase.config.js";
 import Cookies from "universal-cookie";
 import axios from "axios";
@@ -12,16 +18,15 @@ function authContext({ children }) {
   const [user, setUser] = useState(null);
   const userId = cookies.get("user");
   // init firestore
+
   const firestore = getFirestore(app);
-
   const auth = getAuth(app);
-
   const authentication = async () => {
     try {
       const signIn = await signInAnonymously(auth);
       setCountry(signIn.user.uid);
+      getUser(signIn.user.uid);
       cookies.set("user", signIn.user.uid, { path: "/" });
-      getUser();
     } catch (e) {
       return e;
     }
@@ -30,29 +35,27 @@ function authContext({ children }) {
     const location = await axios.get(
       "https://us-central1-colornonym.cloudfunctions.net/getUserLocation"
     );
-    const firestore = getFirestore(app);
     const userDoc = doc(firestore, "users", userId);
-    setUser((prev) => ({ ...prev, country: location.data }));
-    updateDoc(userDoc, { country: location.data });
+    setDoc(userDoc, { country: location.data }, { merge: true });
     cookies.set("country", location.data.code, { path: "/" });
   };
 
   const changeUsername = (username) => {
-    console.log(username);
-    const userId = cookies.get("user");
-    const firestore = getFirestore(app);
+    setUser((prev) => ({ ...prev, name: username }));
     const userDoc = doc(firestore, "users", userId);
-    updateDoc(userDoc, { name: username }).then(() => {
-      setUser((prev) => ({ ...prev, name: username }));
+    updateDoc(userDoc, { name: username });
+  };
+
+  const getUser = (userId) => {
+    const userDoc = doc(firestore, "users", userId);
+    getDoc(userDoc).then((user) => {
+      setUser((prev) => ({ ...prev, ...user.data(), uid: user.id }));
     });
   };
 
   useEffect(() => {
     if (cookies.get("user") === undefined) return authentication();
-    const userDoc = doc(firestore, "users", userId);
-    getDoc(userDoc).then((user) => {
-      setUser(user.data());
-    });
+    getUser(userId);
   }, []);
 
   return (
