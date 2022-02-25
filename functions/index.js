@@ -304,6 +304,6 @@ function getCountry(code) {
 
 exports.getUserLocation = functions.https.onRequest(async (req, res) => {
   const country = req.headers["x-appengine-country"];
-  res.header("Access-Control-Allow-Origin", "localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.json(getCountry(country));
 });
