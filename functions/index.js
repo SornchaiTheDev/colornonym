@@ -5,12 +5,6 @@ const cors = require("cors");
 admin.initializeApp();
 exports.userCreated = functions.auth.user().onCreate(async (user) => {
   const { uid } = user;
-  // const getUserAmount = await admin
-  //   .firestore()
-  //   .collection("counting")
-  //   .doc("people")
-  //   .get();
-  // const amount = getUserAmount.data().user;
 
   admin
     .firestore()
