@@ -5,32 +5,18 @@ const cors = require("cors");
 admin.initializeApp();
 exports.userCreated = functions.auth.user().onCreate(async (user) => {
   const { uid } = user;
-  const getUserAmount = await admin
-    .firestore()
-    .collection("counting")
-    .doc("people")
-    .get();
-  const amount = getUserAmount.data().user;
+  // const getUserAmount = await admin
+  //   .firestore()
+  //   .collection("counting")
+  //   .doc("people")
+  //   .get();
+  // const amount = getUserAmount.data().user;
 
   admin
     .firestore()
-    .collection("users")
-    .doc(uid)
-    .update(
-      {
-        name: `User#${amount.toString().padStart(4, "0")}`,
-        score: 0,
-        country: { code: "", name: "" },
-      },
-      { merge: true }
-    )
-    .then(() =>
-      admin
-        .firestore()
-        .collection("counting")
-        .doc("people")
-        .update({ user: admin.firestore.FieldValue.increment(1) })
-    );
+    .collection("counting")
+    .doc("people")
+    .update({ user: admin.firestore.FieldValue.increment(1) });
 
   console.log(`created user:${uid} success`);
   return "Success";
