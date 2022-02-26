@@ -1,9 +1,19 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { AuthCtx } from "../hooks/authContext";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import Ads from "./Ads";
 import useLeaderboard from "../hooks/useLeaderboard";
 import Cookies from "universal-cookie";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  limit,
+  query,
+  orderBy,
+  startAfter,
+} from "firebase/firestore";
+import { app } from "../firebase.config";
 
 function Player({ name, score, place, country, fullCountry }) {
   return (
@@ -103,7 +113,10 @@ function Me({ isShow }) {
 
 function LeaderBoard() {
   const [isShow, setIsShow] = useState(false);
-  const { users } = useLeaderboard();
+  const leaderboardRef = useRef(null);
+
+  const { users, onScroll, isEnd } = useLeaderboard(leaderboardRef.current);
+
   return (
     <div className="fixed bottom-0 w-full  md:w-7/12 lg:w-6/12 xl:w-4/12 bg-white rounded-t-2xl pt-4">
       <button
@@ -120,20 +133,23 @@ function LeaderBoard() {
       </button>
       <hr className="my-2" />
       <div
-        id="leaderboard"
+        onScroll={onScroll}
+        ref={leaderboardRef}
         className={`${
           isShow ? "flex" : "hidden "
         } flex-col items-center h-64 overflow-y-scroll`}
       >
-        {users.map(({ name, score, country, fullCountry }, index) => (
+        {users.map(({ name, score, country }, index) => (
           <Player
+            key={index}
             name={name}
-            place={index}
+            place={index + 1}
             score={score}
-            country={country}
-            fullCountry={fullCountry}
+            country={country.code}
+            fullCountry={country.name}
           />
         ))}
+        {!isEnd && <h2 className="mt-2">Loading...</h2>}
       </div>
       <Me
         isShow={isShow}
