@@ -1,0 +1,21 @@
+[debug] [2022-02-26T22:29:23.989Z] ----------------------------------------------------------------------
+[debug] [2022-02-26T22:29:23.989Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2022-02-26T22:29:23.990Z] CLI Version:   10.2.1
+[debug] [2022-02-26T22:29:23.990Z] Platform:      darwin
+[debug] [2022-02-26T22:29:23.990Z] Node Version:  v16.9.1
+[debug] [2022-02-26T22:29:23.992Z] Time:          Sun Feb 27 2022 05:29:23 GMT+0700 (Indochina Time)
+[debug] [2022-02-26T22:29:23.992Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-02-26T22:29:24.036Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-02-26T22:29:24.036Z] > authorizing via signed-in user (sornchaithedev@gmail.com)
+[debug] [2022-02-26T22:29:24.036Z] [iam] checking project colornonym for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2022-02-26T22:29:24.037Z] > refreshing access token with scopes: []
+[debug] [2022-02-26T22:29:24.037Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2022-02-26T22:29:24.622Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Sat, 26 Feb 2022 22:29:24 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2022-02-26T22:29:24.665Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/colornonym:testIamPermissions [none]
+[debug] [2022-02-26T22:29:24.666Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/colornonym:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2022-02-26T22:29:26.410Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/colornonym:testIamPermissions 200
+[debug] [2022-02-26T22:29:26.411Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/colornonym:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2022-02-26T22:29:26.411Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/colornonym/serviceAccounts/colornonym@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2022-02-26T22:29:26.411Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/colornonym/serviceAccounts/colornonym@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}

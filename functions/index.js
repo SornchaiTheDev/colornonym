@@ -298,3 +298,16 @@ exports.getUserLocation = functions.https.onRequest((req, res) => {
   const corshandler = cors(originWhitelist);
   corshandler(req, res, () => res.json(getCountry(country)));
 });
+
+exports.setUserScore = functions.https.onRequest((req, res) => {
+  const score = req.body.score;
+  const userId = req.body.userId;
+  admin
+    .firestore()
+    .collection("users")
+    .doc(userId)
+    .update({ score })
+    .then(() => {
+      res.json({ status: "success" });
+    });
+});
