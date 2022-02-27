@@ -139,25 +139,39 @@ function LeaderBoard() {
           isShow ? "flex" : "hidden "
         } flex-col items-center h-64 overflow-y-scroll`}
       >
-        {users.map(({ name, score, country }, index) => (
-          <Player
-            key={index}
-            name={name}
-            place={index + 1}
-            score={score}
-            country={country.code}
-            fullCountry={country.name}
-          />
-        ))}
+        {users.length > 0
+          ? users.map(({ name, score, country }, index) => (
+              <Player
+                key={index}
+                name={name}
+                place={index + 1}
+                score={score}
+                country={country.code}
+                fullCountry={country.name}
+              />
+            ))
+          : new Array(10).fill(0).map((_, index) => (
+              <div
+                key={index}
+                className="w-11/12 flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-6 mb-2  animate-pulse"
+              >
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-gray-300  rounded-full"></div>
+                  <div className="flex flex-col space-y-2">
+                    <div className="w-full h-4 bg-gray-300 rounded-full"></div>
+                    <div className="flex space-x-1">
+                      <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
+                      <div className="w-28 h-4 bg-gray-300 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
+              </div>
+            ))}
         {!isEnd && <h2 className="mt-2">Loading...</h2>}
       </div>
       <Me
         isShow={isShow}
-        // name={user !== null && user.name.length > 0 ? user.name : "Loading..."}
-        // place={1}
-        // score={0}
-        // country="TH"
-        // fullCountry="Thailand"
       />
       <Ads />
     </div>

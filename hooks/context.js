@@ -1,6 +1,8 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
 import useTimer from "./useTimer";
 import useColor from "./useColor";
+import axios from "axios";
+import { AuthCtx } from "./authContext";
 
 // Context Initial
 export const Context = createContext(null);
@@ -23,6 +25,7 @@ function ContextProvider({ children }) {
   const { colors, correctIndex, randomColor, blink, stopBlink } = useColor({
     score,
   });
+  const { user } = useContext(AuthCtx);
 
   const correct = () => {
     setScore((prev) => prev + 1);
@@ -31,6 +34,26 @@ function ContextProvider({ children }) {
   const wrong = () => {
     if (timer > 0) return minusTimer();
     setMode("GAME_OVER");
+  };
+
+  const updateUserScore = () => {
+    grecaptcha.ready(async () => {
+      const token = await grecaptcha.execute(
+        "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
+        {
+          action: "updateScore",
+        }
+      );
+      axios({
+        method: "post",
+        url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
+        data: new URLSearchParams({
+          uid: user.uid,
+          score,
+          token,
+        }),
+      }).then((res) => console.log(res));
+    });
   };
 
   useEffect(() => {
@@ -70,6 +93,7 @@ function ContextProvider({ children }) {
         break;
       case "GAME_OVER":
         stopBlink();
+        updateUserScore();
         break;
       case "RESET":
         setScore(0);

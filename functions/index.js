@@ -1,6 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors");
+const axios = require("axios").default;
 
 admin.initializeApp();
 exports.userCreated = functions.auth.user().onCreate(async (user) => {
@@ -299,15 +300,23 @@ exports.getUserLocation = functions.https.onRequest((req, res) => {
   corshandler(req, res, () => res.json(getCountry(country)));
 });
 
-exports.setUserScore = functions.https.onRequest((req, res) => {
+exports.setUserScore = functions.https.onRequest(async (req, res) => {
   const score = req.body.score;
-  const userId = req.body.userId;
-  admin
-    .firestore()
-    .collection("users")
-    .doc(userId)
-    .update({ score })
-    .then(() => {
-      res.json({ status: "success" });
-    });
+  const uid = req.body.uid;
+  const token = req.body.token;
+  const corshandler = cors(originWhitelist);
+
+  const verify = async () => {
+    const response = await axios.post(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHAV3_SECRET}&response=${token}`
+    );
+
+    if (response.data.success) {
+      await admin.firestore().collection("users").doc(uid).update({ score });
+      res.json({ status: "success:updated-success" });
+    } else {
+      res.json({ status: "error:something-went-wrong" });
+    }
+  };
+  corshandler(req, res, verify);
 });

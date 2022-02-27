@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ColorParts from "./ColorParts";
 import Timer from "./Timer";
 import Inspired from "./Inspired";
 import LeaderBoard from "./LeaderBoard";
 import { Context } from "../hooks/context";
 import { useContext } from "react";
+
 function Body() {
   const { column } = useContext(Context);
+
+  
   return (
     <div
       className={`${

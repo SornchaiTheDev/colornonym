@@ -2,15 +2,16 @@ import { useState, useEffect, createContext } from "react";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import {
   getFirestore,
-  getDoc,
   doc,
-  updateDoc,
   setDoc,
+  updateDoc,
   onSnapshot,
+  getDoc,
 } from "firebase/firestore";
 import { app } from "../firebase.config.js";
 import Cookies from "universal-cookie";
 import axios from "axios";
+import Script from "next/script";
 
 export const AuthCtx = createContext(null);
 const cookies = new Cookies();
@@ -25,8 +26,8 @@ function authContext({ children }) {
   const authentication = async () => {
     try {
       const signIn = await signInAnonymously(auth);
+      setUser((prev) => ({ ...prev, uid: signIn.user.uid }));
       setCountry(signIn.user.uid);
-      getUser(signIn.user.uid);
       cookies.set("user", signIn.user.uid, { path: "/" });
     } catch (e) {
       return e;
@@ -37,7 +38,23 @@ function authContext({ children }) {
       "https://us-central1-colornonym.cloudfunctions.net/getUserLocation"
     );
     const userDoc = doc(firestore, "users", userId);
-    setDoc(userDoc, { country: location.data }, { merge: true });
+    const countingDoc = doc(firestore, "counting", "people");
+    const amount = await getDoc(countingDoc);
+    setDoc(
+      userDoc,
+      {
+        name: `User#${amount.data().user.toString().padStart(4, "0")}`,
+        score: 0,
+        country: location.data,
+      },
+      { merge: true }
+    );
+    setUser((prev) => ({
+      ...prev,
+      name: `User#${amount.data().user.toString().padStart(4, "0")}`,
+      score: 0,
+      country: location.data,
+    }));
     cookies.set("country", location.data.code, { path: "/" });
   };
 
@@ -50,9 +67,7 @@ function authContext({ children }) {
   const getUser = (userId) => {
     const userDoc = doc(firestore, "users", userId);
     onSnapshot(userDoc, (user) => {
-      if (user.name === undefined) {
-        setUser((prev) => ({ ...prev, ...user.data(), uid: user.id }));
-      }
+      setUser((prev) => ({ ...prev, ...user.data(), uid: user.id }));
     });
   };
 
@@ -61,10 +76,17 @@ function authContext({ children }) {
     getUser(userId);
   }, []);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
-    <AuthCtx.Provider value={{ user, changeUsername }}>
-      {children}
-    </AuthCtx.Provider>
+    <>
+      <AuthCtx.Provider value={{ user, changeUsername }}>
+        {children}
+      </AuthCtx.Provider>
+      <Script src="https://www.google.com/recaptcha/api.js?render=6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR" />
+    </>
   );
 }
 
