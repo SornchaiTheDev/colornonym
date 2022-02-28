@@ -301,7 +301,7 @@ exports.getUserLocation = functions.https.onRequest((req, res) => {
 });
 
 exports.setUserScore = functions.https.onRequest(async (req, res) => {
-  const score = req.body.score;
+  const highScore = req.body.highScore;
   const uid = req.body.uid;
   const token = req.body.token;
   const corshandler = cors(originWhitelist);
@@ -312,7 +312,11 @@ exports.setUserScore = functions.https.onRequest(async (req, res) => {
     );
 
     if (response.data.success) {
-      await admin.firestore().collection("users").doc(uid).update({ score });
+      await admin
+        .firestore()
+        .collection("users")
+        .doc(uid)
+        .update({ highScore: parseInt(highScore) });
       res.json({ status: "success:updated-success" });
     } else {
       res.json({ status: "error:something-went-wrong" });
