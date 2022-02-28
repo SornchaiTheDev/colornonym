@@ -278,7 +278,11 @@ function getCountry(code) {
   return "unknown";
 }
 
-const whitelist = ["http://localhost:3000", "http://192.168.1.5:3000" , "https://colornonym-8fe9i4t10-sornchaithedev.vercel.app"];
+const whitelist = [
+  "http://localhost:3000",
+  "http://192.168.1.5:3000",
+  "https://colornonym.vercel.app",
+];
 
 /**
  *

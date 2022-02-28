@@ -23,6 +23,7 @@ function index() {
       </AuthContextProvider>
     </FirebaseContextProvider>
   );
+  
 }
 
 export default index;
