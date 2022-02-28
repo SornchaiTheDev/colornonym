@@ -50,6 +50,7 @@ function authContext({ children }) {
       ...prev,
       name: `User#${amount.data().user.toString().padStart(4, "0")}`,
       score: 0,
+      highScore: 0,
       country: location.data,
     }));
     cookies.set("country", location.data.code, { path: "/" });

@@ -10,6 +10,7 @@ function index() {
         <Head>
           <title>Colornonym</title>
         </Head>
+
         <div className="flex flex-col justify-start items-center bg-primary min-h-screen ">
           <Body />
         </div>

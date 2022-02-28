@@ -5,11 +5,11 @@ import Inspired from "./Inspired";
 import LeaderBoard from "./LeaderBoard";
 import { Context } from "../hooks/context";
 import { useContext } from "react";
+import EndGame from "./EndGame";
 
 function Body() {
   const { column } = useContext(Context);
 
-  
   return (
     <div
       className={`${
@@ -28,10 +28,12 @@ function Body() {
           @_cho_kun_
         </a>
       </h4>
+
       <Timer />
       <ColorParts />
       <Inspired />
       <LeaderBoard />
+      <EndGame />
     </div>
   );
 }
