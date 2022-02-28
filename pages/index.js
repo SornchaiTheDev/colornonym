@@ -12,12 +12,12 @@ function index() {
         <ContextProvider>
           <Head>
             <title>Colornonym</title>
+            <Script src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5805738859470835" />
           </Head>
 
           <div className="flex flex-col justify-start items-center bg-primary min-h-screen ">
             <Body />
           </div>
-          <Script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
           <Script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
         </ContextProvider>
       </AuthContextProvider>
