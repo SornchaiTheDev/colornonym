@@ -53,7 +53,7 @@ function ContextProvider({ children }) {
           score,
           token,
         }),
-      })
+      });
     });
   };
 
@@ -66,7 +66,7 @@ function ContextProvider({ children }) {
   }, [score]);
 
   useEffect(() => {
-    // console.log(mode);
+    console.log(mode);
     switch (mode) {
       case "EASY":
         randomColor(column);
@@ -121,6 +121,7 @@ function ContextProvider({ children }) {
     wrong,
     mode,
     setMode,
+    isNewHighScore: mode === "GAME_OVER" && score > 2,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

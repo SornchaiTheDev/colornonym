@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ColorParts from "./ColorParts";
 import Timer from "./Timer";
 import Inspired from "./Inspired";
@@ -8,7 +8,7 @@ import { useContext } from "react";
 import EndGame from "./EndGame";
 
 function Body() {
-  const { column } = useContext(Context);
+  const { column, isNewHighScore } = useContext(Context);
 
   return (
     <div
@@ -33,7 +33,8 @@ function Body() {
       <ColorParts />
       <Inspired />
       <LeaderBoard />
-      <EndGame />
+
+      <EndGame isNewHighScore={isNewHighScore} />
     </div>
   );
 }
