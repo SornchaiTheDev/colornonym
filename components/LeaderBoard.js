@@ -1,37 +1,10 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { AuthCtx } from "../hooks/authContext";
-import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import Ads from "./Ads";
 import useLeaderboard from "../hooks/useLeaderboard";
-import Cookies from "universal-cookie";
-import {
-  collection,
-  getDocs,
-  getFirestore,
-  limit,
-  query,
-  orderBy,
-  startAfter,
-} from "firebase/firestore";
-import { app } from "../firebase.config";
+import getUnicodeFlagIcon from "country-flag-icons/unicode";
+import Player from "../components/Leaderboard/Player";
 
-function Player({ name, score, place, country, fullCountry }) {
-  return (
-    <div className="w-11/12 flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-4 mb-2">
-      <div className="flex items-center space-x-2">
-        <h1>{place}</h1>
-        <div className="flex flex-col">
-          <h1>{name}</h1>
-          <div className="flex space-x-1">
-            <h1 className="">{getUnicodeFlagIcon(country)}</h1>
-            <h3 className="font-normal">{fullCountry}</h3>
-          </div>
-        </div>
-      </div>
-      <h1 className="font-bold">{score}</h1>
-    </div>
-  );
-}
 function Me({ isShow }) {
   const { user } = useContext(AuthCtx);
 
@@ -106,7 +79,7 @@ function Me({ isShow }) {
           </div>
         </div>
       </div>
-      <h1 className="font-bold">{user.score}</h1>
+      <h1 className="font-bold">{user.highScore}</h1>
     </div>
   );
 }
@@ -140,15 +113,16 @@ function LeaderBoard() {
         } flex-col items-center h-64 overflow-y-scroll`}
       >
         {users.length > 0
-          ? users.map(({ name, score, country }, index) => (
-              <Player
-                key={index}
-                name={name}
-                place={index + 1}
-                score={score}
-                country={country.code}
-                fullCountry={country.name}
-              />
+          ? users.map(({ name, highScore, country }, index) => (
+              <div className="w-11/12" key={index}>
+                <Player
+                  name={name}
+                  place={index + 1}
+                  score={highScore}
+                  country={country.code}
+                  fullCountry={country.name}
+                />
+              </div>
             ))
           : new Array(10).fill(0).map((_, index) => (
               <div

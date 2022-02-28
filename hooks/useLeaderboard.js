@@ -23,7 +23,7 @@ function useLeaderboard(leaderboard) {
 
   // get first set of users
   const firstQuery = () => {
-    const q = query(collectionRef, orderBy("score", "desc"), limit(5));
+    const q = query(collectionRef, orderBy("highScore", "desc"), limit(5));
     getDocs(q).then((docs) => {
       setLastVisible(docs.docs[docs.docs.length - 1]);
       docs.forEach((doc) => setUsers((prev) => [...prev, doc.data()]));
@@ -38,7 +38,7 @@ function useLeaderboard(leaderboard) {
   const fetchUser = async (lastVisible) => {
     const q = query(
       collectionRef,
-      orderBy("score", "desc"),
+      orderBy("highScore", "desc"),
       startAfter(lastVisible),
       limit(5)
     );

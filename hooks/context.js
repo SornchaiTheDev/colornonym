@@ -11,6 +11,7 @@ function ContextProvider({ children }) {
   const [score, setScore] = useState(0);
   const [column, setColumn] = useState(2);
   const [mode, setMode] = useState("EASY");
+  const [isNewHighScore, setIsNewHighScore] = useState(false);
 
   const {
     setMaxTimer,
@@ -37,24 +38,27 @@ function ContextProvider({ children }) {
   };
 
   const updateUserScore = () => {
-    updateScoreState(score);
-    grecaptcha.ready(async () => {
-      const token = await grecaptcha.execute(
-        "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
-        {
-          action: "updateScore",
-        }
-      );
-      axios({
-        method: "post",
-        url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
-        data: new URLSearchParams({
-          uid: user.uid,
-          score,
-          token,
-        }),
+    if (user.highScore < score) {
+      setIsNewHighScore(true);
+      updateScoreState(score);
+      grecaptcha.ready(async () => {
+        const token = await grecaptcha.execute(
+          "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
+          {
+            action: "updateScore",
+          }
+        );
+        axios({
+          method: "post",
+          url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
+          data: new URLSearchParams({
+            uid: user.uid,
+            highScore: score,
+            token,
+          }),
+        });
       });
-    });
+    }
   };
 
   useEffect(() => {
@@ -101,6 +105,7 @@ function ContextProvider({ children }) {
         setColumn(2);
         resetTimer();
         setMode("EASY");
+        setIsNewHighScore(false);
         break;
     }
   }, [score, mode, column]);
@@ -121,7 +126,7 @@ function ContextProvider({ children }) {
     wrong,
     mode,
     setMode,
-    isNewHighScore: mode === "GAME_OVER" && score > 2,
+    isNewHighScore,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

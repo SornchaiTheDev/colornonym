@@ -62,7 +62,7 @@ function authContext({ children }) {
     updateDoc(userDoc, { name: username });
   };
   const updateScoreState = (score) => {
-    setUser((prev) => ({ ...prev, score }));
+    setUser((prev) => ({ ...prev, highScore: score }));
   };
 
   const getUser = (userId) => {
@@ -76,10 +76,6 @@ function authContext({ children }) {
     if (cookies.get("user") === undefined) return authentication();
     getUser(userId);
   }, []);
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <>

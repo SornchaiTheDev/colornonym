@@ -3,26 +3,56 @@ import { Context } from "../hooks/context";
 import { AuthCtx } from "../hooks/authContext";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
+import {
+  getDocs,
+  collection,
+  getFirestore,
+  query,
+  where,
+  limit,
+  orderBy,
+} from "firebase/firestore";
 import { motion, AnimatePresence } from "framer-motion";
+import { app } from "../firebase.config";
+import PlayerHighScore from "./Leaderboard/PlayerHighScore";
 function EndGame({ isNewHighScore }) {
   const { width, height } = useWindowSize();
   const { setMode, score } = useContext(Context);
   const { user } = useContext(AuthCtx);
-  const [users, setUsers] = useState([
-    { name: "user01", score: 5 },
-    { name: "user03", score: 4 },
-    { name: "User#0000", score: 6 },
-  ]);
+  const [users, setUsers] = useState([]);
+  const [isFetch, setIsFetch] = useState(false);
+
+  const fetchUsers = () => {
+    const firestore = getFirestore(app);
+    const usersRef = collection(firestore, "users");
+    const q = query(
+      usersRef,
+      where("highScore", "<=", score),
+      orderBy("highScore", "desc"),
+      limit(1)
+    );
+    getDocs(q).then((users) => {
+      const docs = [];
+      users.forEach((doc) => {
+        if (doc.data().name !== user.name) docs.push(doc.data());
+      });
+
+      setUsers([
+        ...docs,
+        { name: user.name, highScore: score, country: user.country },
+      ]);
+      setIsFetch(true);
+    });
+  };
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setUsers([users[0], users[2], users[1]]);
-      setTimeout(() => {
-        setUsers([users[2], users[0], users[1]]);
-      }, 1000);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
+    if (isNewHighScore) fetchUsers();
+  }, [isNewHighScore]);
+
+  useEffect(() => {
+    if (isFetch) setUsers([...users.reverse()]);
+  }, [isFetch]);
+
   const varaint = {
     init: {
       opacity: 0,
@@ -63,36 +93,45 @@ function EndGame({ isNewHighScore }) {
                 ></ion-icon>
               </div>
             </div>
-            <div className="flex flex-col">
-              {users.map(({ name, score }, index) => (
-                <motion.div
-                  key={name}
-                  layout
-                  transition={{ duration: 0.4 }}
-                  className="w-full flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-4 mb-2"
-                >
-                  <div className="flex items-center space-x-2">
-                    <h1>{index + 1}</h1>
-                    <div className="flex flex-col">
-                      <h1>{name}</h1>
-                      <div className="flex space-x-1">
-                        <h1 className="">th</h1>
-                        <h3 className="font-normal">Thailand</h3>
+
+            {users.length > 0
+              ? users.map(({ name, country, highScore }, index) => (
+                  <motion.div layout key={name}>
+                    <PlayerHighScore
+                      place={index + 1}
+                      name={name}
+                      country={country.code}
+                      fullCountry={country.name}
+                      score={highScore}
+                      isUser={name === user.name}
+                    />
+                  </motion.div>
+                ))
+              : new Array(2).fill(0).map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-full flex justify-between items-center bg-white rounded-lg shadow-md px-6 py-6 mb-2"
+                  >
+                    <div className="flex items-center space-x-2 animate-pulse">
+                      <div className="w-8 h-8 bg-gray-300  rounded-full"></div>
+                      <div className="flex flex-col space-y-2">
+                        <div className="w-full h-4 bg-gray-300 rounded-full"></div>
+                        <div className="flex space-x-1">
+                          <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
+                          <div className="w-28 h-4 bg-gray-300 rounded-full"></div>
+                        </div>
                       </div>
                     </div>
+                    <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
                   </div>
-                  <div className="flex justify-center items-center">
-                    <h1 className="font-bold">{score}</h1>
-                    <motion.div animate={{ opacity: [0.5, 1] }}></motion.div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                ))}
 
             <button
               className="text-white font-bold bg-[#E4572E] w-full rounded-lg py-4"
               onClick={() => {
                 setMode("RESET");
+                setIsFetch(false);
+                setUsers([]);
               }}
             >
               Play Again
