@@ -59,7 +59,7 @@ function ContextProvider({ children }) {
           }),
         });
       });
-      // log("update_high_score");
+      log("update_high_score");
     }
   };
 

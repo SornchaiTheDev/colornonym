@@ -1,10 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { getAnalytics, logEvent } from "firebase/analytics";
-
 import React from "react";
 import { app } from "../firebase.config";
 
-const FirebaseCtx = createContext(null);
+export const FirebaseCtx = createContext(null);
 function Firebase({ children }) {
   const [analytics, setAnalytics] = useState(null);
 
@@ -14,8 +13,7 @@ function Firebase({ children }) {
     logEvent(firebase_analytics, "page_view");
   }, []);
   const log = (event) => {
-    console.log("hello");
-    // logEvent(analytics, event);
+    logEvent(analytics, event);
   };
   return (
     <FirebaseCtx.Provider value={{ log }}>{children}</FirebaseCtx.Provider>

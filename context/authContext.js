@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { getAuth, signInAnonymously } from "firebase/auth";
 import {
   getFirestore,
@@ -8,6 +8,7 @@ import {
   onSnapshot,
   getDoc,
 } from "firebase/firestore";
+import { FirebaseCtx } from "./firebaseContext.js";
 import { app } from "../firebase.config.js";
 import Cookies from "universal-cookie";
 import axios from "axios";
@@ -19,6 +20,7 @@ const cookies = new Cookies();
 function authContext({ children }) {
   const [user, setUser] = useState({});
   const userId = cookies.get("user");
+  const { log } = useContext(FirebaseCtx);
 
   // init firebase instance
   const firestore = getFirestore(app);
@@ -54,12 +56,14 @@ function authContext({ children }) {
       country: location.data,
     }));
     cookies.set("country", location.data.code, { path: "/" });
+    log("create_user_successed");
   };
 
   const changeUsername = (username) => {
     setUser((prev) => ({ ...prev, name: username }));
     const userDoc = doc(firestore, "users", userId);
     updateDoc(userDoc, { name: username });
+    log("update_user_name");
   };
   const updateScoreState = (score) => {
     setUser((prev) => ({ ...prev, highScore: score }));
