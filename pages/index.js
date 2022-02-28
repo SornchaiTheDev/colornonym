@@ -12,11 +12,6 @@ function index() {
         <ContextProvider>
           <Head>
             <title>Colornonym</title>
-            <script
-              async
-              src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5805738859470835"
-              crossOrigin="anonymous"
-            ></script>
           </Head>
 
           <div className="flex flex-col justify-start items-center bg-primary min-h-screen ">
