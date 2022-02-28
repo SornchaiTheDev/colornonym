@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ColorParts from "./ColorParts";
-import Timer from "./Timer";
+import Timer from "./timer";
 import Inspired from "./Inspired";
 import LeaderBoard from "./LeaderBoard";
 import { Context } from "../context/context";
