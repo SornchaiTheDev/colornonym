@@ -25,7 +25,7 @@ function ContextProvider({ children }) {
   const { colors, correctIndex, randomColor, blink, stopBlink } = useColor({
     score,
   });
-  const { user } = useContext(AuthCtx);
+  const { user, updateScoreState } = useContext(AuthCtx);
 
   const correct = () => {
     setScore((prev) => prev + 1);
@@ -37,6 +37,7 @@ function ContextProvider({ children }) {
   };
 
   const updateUserScore = () => {
+    updateScoreState(score);
     grecaptcha.ready(async () => {
       const token = await grecaptcha.execute(
         "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
@@ -52,7 +53,7 @@ function ContextProvider({ children }) {
           score,
           token,
         }),
-      }).then((res) => console.log(res));
+      })
     });
   };
 

@@ -40,15 +40,12 @@ function authContext({ children }) {
     const userDoc = doc(firestore, "users", userId);
     const countingDoc = doc(firestore, "counting", "people");
     const amount = await getDoc(countingDoc);
-    setDoc(
-      userDoc,
-      {
-        name: `User#${amount.data().user.toString().padStart(4, "0")}`,
-        score: 0,
-        country: location.data,
-      },
-      { merge: true }
-    );
+    setDoc(userDoc, {
+      name: `User#${amount.data().user.toString().padStart(4, "0")}`,
+      score: 0,
+      highScore: 0,
+      country: location.data,
+    });
     setUser((prev) => ({
       ...prev,
       name: `User#${amount.data().user.toString().padStart(4, "0")}`,
@@ -62,6 +59,9 @@ function authContext({ children }) {
     setUser((prev) => ({ ...prev, name: username }));
     const userDoc = doc(firestore, "users", userId);
     updateDoc(userDoc, { name: username });
+  };
+  const updateScoreState = (score) => {
+    setUser((prev) => ({ ...prev, score }));
   };
 
   const getUser = (userId) => {
@@ -82,7 +82,7 @@ function authContext({ children }) {
 
   return (
     <>
-      <AuthCtx.Provider value={{ user, changeUsername }}>
+      <AuthCtx.Provider value={{ user, changeUsername, updateScoreState }}>
         {children}
       </AuthCtx.Provider>
       <Script src="https://www.google.com/recaptcha/api.js?render=6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR" />

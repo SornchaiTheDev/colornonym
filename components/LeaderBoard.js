@@ -168,11 +168,9 @@ function LeaderBoard() {
                 <div className="w-6 h-4 bg-gray-300 rounded-sm"></div>
               </div>
             ))}
-        {!isEnd && <h2 className="mt-2">Loading...</h2>}
+        {!isEnd && users.length > 5 && <h2 className="mt-2">Loading...</h2>}
       </div>
-      <Me
-        isShow={isShow}
-      />
+      <Me isShow={isShow} />
       <Ads />
     </div>
   );
