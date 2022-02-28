@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../hooks/context";
+import { Context } from "../context/context";
 import ColorBtn from "./ColorBtn";
 
 function ColorParts() {

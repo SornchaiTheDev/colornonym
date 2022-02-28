@@ -1,9 +1,9 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
-import useTimer from "./useTimer";
-import useColor from "./useColor";
+import useTimer from "../hooks/useTimer";
+import useColor from "../hooks/useColor";
 import axios from "axios";
 import { AuthCtx } from "./authContext";
-
+import { FirebaseCtx } from "./firebaseContext";
 // Context Initial
 export const Context = createContext(null);
 
@@ -12,6 +12,7 @@ function ContextProvider({ children }) {
   const [column, setColumn] = useState(2);
   const [mode, setMode] = useState("EASY");
   const [isNewHighScore, setIsNewHighScore] = useState(false);
+  const { log } = useContext(FirebaseCtx);
 
   const {
     setMaxTimer,
@@ -58,6 +59,7 @@ function ContextProvider({ children }) {
           }),
         });
       });
+      // log("update_high_score");
     }
   };
 
@@ -81,14 +83,14 @@ function ContextProvider({ children }) {
         randomColor(column);
         setMaxTimer(5);
         setMinusTime(3);
-        blink(2, column);
+        // blink(2, column);
         break;
       case "HARD":
         stopBlink();
         randomColor(column);
         setMaxTimer(10);
         setMinusTime(4);
-        blink(1, column);
+        // blink(1, column);
         break;
       case "INSANE":
         stopBlink();

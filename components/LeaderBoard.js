@@ -1,9 +1,10 @@
 import React, { useState, useContext, useRef } from "react";
-import { AuthCtx } from "../hooks/authContext";
+import { AuthCtx } from "../context/authContext";
 import Ads from "./Ads";
 import useLeaderboard from "../hooks/useLeaderboard";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import Player from "../components/Leaderboard/Player";
+import { motion } from "framer-motion";
 
 function Me({ isShow }) {
   const { user } = useContext(AuthCtx);
@@ -114,7 +115,7 @@ function LeaderBoard() {
       >
         {users.length > 0
           ? users.map(({ name, highScore, country }, index) => (
-              <div className="w-11/12" key={index}>
+              <motion.div layout className="w-11/12" key={name}>
                 <Player
                   name={name}
                   place={index + 1}
@@ -122,7 +123,7 @@ function LeaderBoard() {
                   country={country.code}
                   fullCountry={country.name}
                 />
-              </div>
+              </motion.div>
             ))
           : new Array(10).fill(0).map((_, index) => (
               <div

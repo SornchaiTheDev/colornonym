@@ -1,6 +1,7 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { Context } from "../hooks/context";
+import { Context } from "../context/context";
+import { motion } from "framer-motion";
 
 function SVGColorBtn({ color }) {
   return (
@@ -37,13 +38,15 @@ function ColorBtn({ color, isCorrect }) {
   };
 
   return (
-    <img
-      className={`place-self-stretch w-full p-1 rounded-full ${
-        mode === "GAME_OVER" && isCorrect && "bg-white"
-      }`}
-      onClick={validateColor}
-      src={`data:image/svg+xml;base64,${svgBtn}`}
-    />
+    <motion.div whileTap={{ scale: 0.5 }}>
+      <img
+        className={`place-self-stretch w-full p-1 rounded-full ${
+          mode === "GAME_OVER" && isCorrect && "bg-white"
+        }`}
+        onClick={validateColor}
+        src={`data:image/svg+xml;base64,${svgBtn}`}
+      />
+    </motion.div>
   );
 }
 

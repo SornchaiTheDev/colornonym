@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Context } from "../hooks/context";
-import { AuthCtx } from "../hooks/authContext";
+import { Context } from "../context/context";
+import { AuthCtx } from "../context/authContext";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 import {
@@ -81,8 +81,8 @@ function EndGame({ isNewHighScore }) {
           {width !== Infinity && (
             <Confetti width={width} height={height} recycle={false} />
           )}
-          <div className="space-y-4 w-10/12 ">
-            <div className="bg-white rounded-lg lg:w-2/6 flex flex-col items-center p-4 space-y-4">
+          <div className="space-y-4 w-10/12  md:w-1/4">
+            <div className="bg-white rounded-lg  flex flex-col items-center p-4 space-y-4">
               <h1 className="text-2xl font-bold">New High Score !</h1>
               <div className="flex justify-center items-center">
                 <h1 className=" text-4xl font-bold text-primary">{score}</h1>

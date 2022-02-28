@@ -6,12 +6,11 @@ import {
   orderBy,
   limit,
   getDocs,
-  doc,
-  getDoc,
   startAfter,
+  onSnapshot,
 } from "firebase/firestore";
 import { app } from "../firebase.config";
-import { AuthCtx } from "./authContext";
+import { AuthCtx } from "../context/authContext";
 
 function useLeaderboard(leaderboard) {
   const [users, setUsers] = useState([]);
@@ -24,9 +23,11 @@ function useLeaderboard(leaderboard) {
   // get first set of users
   const firstQuery = () => {
     const q = query(collectionRef, orderBy("highScore", "desc"), limit(5));
-    getDocs(q).then((docs) => {
+    onSnapshot(q, (docs) => {
       setLastVisible(docs.docs[docs.docs.length - 1]);
-      docs.forEach((doc) => setUsers((prev) => [...prev, doc.data()]));
+      const docFetch = [];
+      docs.forEach((doc) => docFetch.push(doc.data()));
+      setUsers(docFetch);
     });
   };
   // init this function only once
