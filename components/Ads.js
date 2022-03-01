@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import Image from "next/image";
-import { useWindowSize } from "react-use";
+import Script from "next/script";
 
 function Ads() {
   useEffect(() => {
@@ -13,6 +12,11 @@ function Ads() {
   }, []);
   return (
     <div className="w-full relative h-16 bg-white text-center">
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5805738859470835"
+        crossOrigin="anonymous"
+      ></script>
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
