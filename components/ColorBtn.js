@@ -38,12 +38,11 @@ function ColorBtn({ color, isCorrect }) {
   };
 
   return (
-    <motion.div whileTap={{ scale: 0.5 }}>
+    <motion.div whileTap={{ scale: 0.5 }} onTap={validateColor}>
       <img
         className={`place-self-stretch w-full p-1 rounded-full ${
           mode === "GAME_OVER" && isCorrect && "bg-white"
         }`}
-        onClick={validateColor}
         src={`data:image/svg+xml;base64,${svgBtn}`}
       />
     </motion.div>
