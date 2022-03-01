@@ -93,15 +93,15 @@ function authContext({ children }) {
         action: "updateScore",
       });
       console.log(token);
-      // axios({
-      //   method: "post",
-      //   url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
-      //   data: new URLSearchParams({
-      //     uid: user.uid,
-      //     highScore: score,
-      //     token,
-      //   }),
-      // });
+      axios({
+        method: "post",
+        url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
+        data: new URLSearchParams({
+          uid: user.uid,
+          highScore: score,
+          token,
+        }),
+      });
     });
   };
 
