@@ -5,15 +5,13 @@ import { app } from "../firebase.config";
 
 export const FirebaseCtx = createContext(null);
 function Firebase({ children }) {
-  const [analytics, setAnalytics] = useState(null);
-
   useEffect(() => {
     const firebase_analytics = getAnalytics(app);
-    setAnalytics(firebase_analytics);
     logEvent(firebase_analytics, "page_view");
   }, []);
   const log = (event) => {
-    logEvent(analytics, event);
+    const firebase_analytics = getAnalytics(app);
+    logEvent(firebase_analytics, event);
   };
   return (
     <FirebaseCtx.Provider value={{ log }}>{children}</FirebaseCtx.Provider>
