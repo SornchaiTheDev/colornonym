@@ -3,8 +3,16 @@ import Image from "next/image";
 import { useWindowSize } from "react-use";
 
 function Ads() {
+  useEffect(() => {
+    const ads = document.getElementsByClassName("adsbygoogle");
+    try {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
   return (
-    <div className="w-full relative h-16 bg-white text-center flex justify-center items-center">
+    <div className="w-full relative h-16 bg-white text-center">
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
@@ -13,7 +21,6 @@ function Ads() {
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({})</script>
     </div>
   );
 }
