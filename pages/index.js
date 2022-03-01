@@ -11,7 +11,38 @@ function index() {
       <AuthContextProvider>
         <ContextProvider>
           <Head>
-            <title>Colornonym</title>
+            <title>Colornonym : Find the right one!</title>
+            <meta name="keywords" content="colornonym , color-blind" />
+            <meta name="author" content="SornchaiTheDev" />
+            <meta name="user-scalable" content="no" />
+            <meta
+              name="description"
+              content="Let's find the color that different from the others"
+            />
+            <meta name="color-scheme" content="dark light" />
+            <meta name="og:title" content="Let's Find the right color!" />
+            <meta
+              name="og:description"
+              content="Let's find the color that different from the others"
+            />
+            <meta
+              name="og:image"
+              content="https://colornonym.sornchai.me/static/images/logo.png"
+            />
+            <meta name="og:url" content="https://colornonym.vercel.app" />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@sornchaithedev" />
+            <meta name="twitter:creator" content="@sornchaithedev" />
+            <meta name="twitter:title" content="Let's Find the right color!" />
+            <meta
+              name="twitter:description"
+              content="Let's find the color that different from the others"
+            />
+            <meta
+              name="twitter:image"
+              content="https://colornonym.sornchai.me/static/images/logo.png"
+            />
           </Head>
 
           <div className="flex flex-col justify-start items-center bg-primary min-h-screen ">
