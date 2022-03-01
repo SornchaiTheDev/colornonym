@@ -13,6 +13,7 @@ function ContextProvider({ children }) {
   const [score, setScore] = useState(0);
   const [column, setColumn] = useState(2);
   const [mode, setMode] = useState("EASY");
+  const [recaptcha, setRecaptcha] = useState(null);
   const [isNewHighScore, setIsNewHighScore] = useState(false);
   const { log } = useContext(FirebaseCtx);
 
@@ -40,10 +41,13 @@ function ContextProvider({ children }) {
     setMode("GAME_OVER");
   };
 
-  const updateUserScore = () => {
+  const updateUserScore = async () => {
     if (user.highScore < score) {
       setIsNewHighScore(true);
       updateScoreState(score);
+      const token = await grecaptcha.execute(recaptcha, {
+        action: "updateScore",
+      });
       axios({
         method: "post",
         url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
@@ -64,10 +68,7 @@ function ContextProvider({ children }) {
         badge: "inline",
         size: "invisible",
       });
-      const token = await grecaptcha.execute(clientId, {
-        action: "updateScore",
-      });
-      console.log(token);
+      setRecaptcha(clientId);
     });
   };
 
