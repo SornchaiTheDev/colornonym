@@ -18,7 +18,7 @@ function Ads() {
         crossOrigin="anonymous"
       ></script>
       <ins
-        class="adsbygoogle"
+        className="adsbygoogle"
         style={{ display: "inline-block", width: "728px", height: "90px" }}
         data-ad-client="ca-pub-5805738859470835"
         data-ad-slot="6921238207"
