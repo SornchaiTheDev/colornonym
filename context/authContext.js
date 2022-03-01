@@ -39,17 +39,20 @@ function authContext({ children }) {
       "https://us-central1-colornonym.cloudfunctions.net/getUserLocation"
     );
     const userDoc = doc(firestore, "users", userId);
-    const countingDoc = doc(firestore, "counting", "people");
-    const amount = await getDoc(countingDoc);
+
+    const randomId = new Date(Math.random() * new Date())
+      .getTime()
+      .toString(23)
+      .slice(0, 4);
     setDoc(userDoc, {
-      name: `User#${amount.data().user.toString().padStart(4, "0")}`,
+      name: `User#${randomId}`,
       score: 0,
       highScore: 0,
       country: location.data,
     });
     setUser((prev) => ({
       ...prev,
-      name: `User#${amount.data().user.toString().padStart(4, "0")}`,
+      name: `User#${randomId}`,
       score: 0,
       highScore: 0,
       country: location.data,
