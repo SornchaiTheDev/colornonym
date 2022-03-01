@@ -12,19 +12,17 @@ function Ads() {
   }, []);
   return (
     <div className="w-full relative h-16 bg-white text-center">
-      {/* <script
+      <script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5805738859470835"
         crossOrigin="anonymous"
-      ></script> */}
-      {/* <ins
-        className="adsbygoogle"
-        style={{ display: "block" }}
+      ></script>
+      <ins
+        class="adsbygoogle"
+        style={{ display: "inline-block", width: "728px", height: "90px" }}
         data-ad-client="ca-pub-5805738859470835"
         data-ad-slot="6921238207"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins> */}
+      ></ins>
     </div>
   );
 }
