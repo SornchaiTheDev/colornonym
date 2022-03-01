@@ -8,7 +8,7 @@ import { useContext } from "react";
 import EndGame from "./EndGame";
 
 function Body() {
-  const { column, isNewHighScore } = useContext(Context);
+  const { column, isNewHighScore, inLineBadge } = useContext(Context);
 
   return (
     <div
@@ -32,7 +32,7 @@ function Body() {
       <Timer />
       <ColorParts />
       <Inspired />
-      <div id="inline-badge" className="mt-6"></div>
+      <div id="inline-badge" ref={inLineBadge} className="mt-6"></div>
       <LeaderBoard />
 
       <EndGame isNewHighScore={isNewHighScore} />

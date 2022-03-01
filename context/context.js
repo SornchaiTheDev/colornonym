@@ -1,4 +1,10 @@
-import React, { createContext, useEffect, useState, useContext } from "react";
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+} from "react";
 import useTimer from "../hooks/useTimer";
 import useColor from "../hooks/useColor";
 import axios from "axios";
@@ -16,6 +22,7 @@ function ContextProvider({ children }) {
   const [recaptcha, setRecaptcha] = useState(null);
   const [isNewHighScore, setIsNewHighScore] = useState(false);
   const { log } = useContext(FirebaseCtx);
+  const inlineBadge = useRef(null);
 
   const {
     setMaxTimer,
@@ -81,7 +88,6 @@ function ContextProvider({ children }) {
   }, [score]);
 
   useEffect(() => {
-    console.log(mode);
     switch (mode) {
       case "EASY":
         randomColor(column);
@@ -138,6 +144,7 @@ function ContextProvider({ children }) {
     mode,
     setMode,
     isNewHighScore,
+    inlineBadge,
   };
 
   return (
