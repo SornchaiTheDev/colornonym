@@ -98,20 +98,20 @@ function ContextProvider({ children }) {
         randomColor(column);
         setMaxTimer(5);
         setMinusTime(3);
-        // blink(2, column);
         break;
       case "HARD":
         stopBlink();
         randomColor(column);
         setMaxTimer(10);
         setMinusTime(4);
-        // blink(1, column);
+        blink(2, column);
         break;
       case "INSANE":
         stopBlink();
         randomColor(column);
-        setMaxTimer(2);
-        setMinusTime(1);
+        setMaxTimer(5);
+        setMinusTime(5);
+        blink(2, column);
         break;
       case "GAME_OVER":
         stopBlink();
