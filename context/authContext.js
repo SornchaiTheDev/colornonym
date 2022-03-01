@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { getAuth, signInAnonymously, signOut } from "firebase/auth";
 import {
   getFirestore,
   doc,

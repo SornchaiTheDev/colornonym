@@ -19,7 +19,7 @@ function index() {
               name="description"
               content="Let's find the color that different from the others"
             />
-            <meta name="color-scheme" content="dark light" />
+
             <meta name="og:title" content="Let's Find the right color!" />
             <meta
               name="og:description"

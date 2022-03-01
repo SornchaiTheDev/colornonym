@@ -97,9 +97,7 @@ function LeaderBoard() {
         className="w-full px-10 flex justify-between items-center space-x-2"
         onClick={() => setIsShow(!isShow)}
       >
-        <h1 className="text-center font-bold text-2xl text-grey-500">
-          Leaderboard
-        </h1>
+        <h1 className="text-center font-bold text-2xl ">Leaderboard</h1>
         <ion-icon
           name={isShow ? "chevron-down-outline" : "chevron-up-outline"}
           style={{ fontSize: "1.5rem" }}
