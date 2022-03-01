@@ -92,7 +92,7 @@ function LeaderBoard() {
   const { users, onScroll, isEnd } = useLeaderboard(leaderboardRef.current);
 
   return (
-    <div className="fixed bottom-0 w-full  md:w-7/12 lg:w-6/12 xl:w-4/12 bg-white rounded-t-2xl pt-4">
+    <div className="fixed bottom-0 w-full  md:w-7/12 lg:w-6/12 xl:w-5/12 bg-white rounded-t-2xl pt-4">
       <button
         className="w-full px-10 flex justify-between items-center space-x-2"
         onClick={() => setIsShow(!isShow)}

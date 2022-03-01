@@ -4,7 +4,7 @@ import { useWindowSize } from "react-use";
 
 function Ads() {
   return (
-    <div className="w-full relative h-16 bg-white text-center flex justify-center items-center"></div>
+    <div className="w-full relative h-24 bg-white text-center flex justify-center items-center"></div>
   );
 }
 
