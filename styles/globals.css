@@ -9,3 +9,8 @@ img {
   -o-user-drag: none;
   user-drag: none;
 }
+
+.grecaptcha-badge {
+  /* visibility: hidden; */
+  bottom: 15% !important;
+}

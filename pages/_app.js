@@ -6,6 +6,7 @@ function MyApp({ Component, pageProps }) {
     <>
       <Script
         crossOrigin="true"
+        strategy="afterInteractive"
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5805738859470835"
       />

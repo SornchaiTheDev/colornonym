@@ -81,6 +81,30 @@ function authContext({ children }) {
     getUser(userId);
   }, []);
 
+  const onRecaptchaLoadCallback = () => {
+    console.log("called");
+    grecaptcha.ready(async () => {
+      // const clientId = grecaptcha.render("inline-badge", {
+      //   sitekey: "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
+      //   badge: "inline",
+      //   size: "invisible",
+      // });
+      const token = await grecaptcha.execute(clientId, {
+        action: "updateScore",
+      });
+      console.log(token);
+      // axios({
+      //   method: "post",
+      //   url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
+      //   data: new URLSearchParams({
+      //     uid: user.uid,
+      //     highScore: score,
+      //     token,
+      //   }),
+      // });
+    });
+  };
+
   return (
     <>
       <AuthCtx.Provider value={{ user, changeUsername, updateScoreState }}>
