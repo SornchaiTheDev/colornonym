@@ -4,6 +4,8 @@ import useColor from "../hooks/useColor";
 import axios from "axios";
 import { AuthCtx } from "./authContext";
 import { FirebaseCtx } from "./firebaseContext";
+import Script from "next/script";
+
 // Context Initial
 export const Context = createContext(null);
 
@@ -42,30 +44,31 @@ function ContextProvider({ children }) {
     if (user.highScore < score) {
       setIsNewHighScore(true);
       updateScoreState(score);
-
-      // grecaptcha.ready(async () => {
-      //   const clientId = grecaptcha.render("inline-badge", {
-      //     sitekey: "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
-      //     badge: "inline",
-      //     size: "invisible",
-      //   });
-      //   const token = await grecaptcha.execute(clientId, {
-      //     action: "updateScore",
-      //   });
-      //   console.log(token);
-      //   axios({
-      //     method: "post",
-      //     url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
-      //     data: new URLSearchParams({
-      //       uid: user.uid,
-      //       highScore: score,
-      //       token,
-      //     }),
-      //   });
-      // });
-
+      axios({
+        method: "post",
+        url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
+        data: new URLSearchParams({
+          uid: user.uid,
+          highScore: score,
+          token,
+        }),
+      });
       log("update_high_score");
     }
+  };
+
+  const onRecaptchaLoadCallback = () => {
+    grecaptcha.ready(async () => {
+      const clientId = grecaptcha.render("inline-badge", {
+        sitekey: "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
+        badge: "inline",
+        size: "invisible",
+      });
+      const token = await grecaptcha.execute(clientId, {
+        action: "updateScore",
+      });
+      console.log(token);
+    });
   };
 
   useEffect(() => {
@@ -136,7 +139,15 @@ function ContextProvider({ children }) {
     isNewHighScore,
   };
 
-  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
+  return (
+    <>
+      <Context.Provider value={contextValue}>{children}</Context.Provider>
+      <Script
+        src="https://www.google.com/recaptcha/api.js?render=explicit"
+        onLoad={onRecaptchaLoadCallback}
+      />
+    </>
+  );
 }
 
 export default ContextProvider;

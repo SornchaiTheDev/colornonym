@@ -32,6 +32,7 @@ function Body() {
       <Timer />
       <ColorParts />
       <Inspired />
+      <div id="inline-badge" className="mt-6"></div>
       <LeaderBoard />
 
       <EndGame isNewHighScore={isNewHighScore} />

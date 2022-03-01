@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import { AuthCtx } from "../hooks/authContext";
+import { AuthCtx } from "../context/authContext";
 import Ads from "./Ads";
 import useLeaderboard from "../hooks/useLeaderboard";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";

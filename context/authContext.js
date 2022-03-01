@@ -12,7 +12,6 @@ import { FirebaseCtx } from "./firebaseContext.js";
 import { app } from "../firebase.config.js";
 import Cookies from "universal-cookie";
 import axios from "axios";
-import Script from "next/script";
 
 export const AuthCtx = createContext(null);
 const cookies = new Cookies();
@@ -81,37 +80,15 @@ function authContext({ children }) {
     getUser(userId);
   }, []);
 
-  const onRecaptchaLoadCallback = () => {
-    console.log("called");
-    grecaptcha.ready(async () => {
-      // const clientId = grecaptcha.render("inline-badge", {
-      //   sitekey: "6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR",
-      //   badge: "inline",
-      //   size: "invisible",
-      // });
-      const token = await grecaptcha.execute(clientId, {
-        action: "updateScore",
-      });
-      console.log(token);
-      axios({
-        method: "post",
-        url: "https://us-central1-colornonym.cloudfunctions.net/setUserScore",
-        data: new URLSearchParams({
-          uid: user.uid,
-          highScore: score,
-          token,
-        }),
-      });
-    });
-  };
+  //   const onRecaptchaLoadCallback = () => {
+  //     console.log("called");
+
+  //   };
 
   return (
-    <>
-      <AuthCtx.Provider value={{ user, changeUsername, updateScoreState }}>
-        {children}
-      </AuthCtx.Provider>
-      <Script src="https://www.google.com/recaptcha/api.js?render=6LcCxaMeAAAAAPxlhc2WS3GI_nPZt9kU6IhxGylR" />
-    </>
+    <AuthCtx.Provider value={{ user, changeUsername, updateScoreState }}>
+      {children}
+    </AuthCtx.Provider>
   );
 }
 
