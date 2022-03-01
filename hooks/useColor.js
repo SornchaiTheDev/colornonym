@@ -26,10 +26,22 @@ function useColor() {
     let colorsArray = new Array(column ** 2).fill("");
     const random = Math.floor(Math.random() * 360);
     colorsArray.forEach((_, index) => {
-      colorsArray[index] = hslToHex(random, 100, 50);
+      const randomKey = new Date(Math.random() * new Date())
+        .getTime()
+        .toString(23);
+      colorsArray[index] = {
+        color: hslToHex(random, 100, 50),
+        key: randomKey,
+      };
     });
     const randomIndex = Math.floor(Math.random() * colorsArray.length);
-    colorsArray[randomIndex] = hslToHex(random, 100, 40);
+    const randomKey = new Date(Math.random() * new Date())
+      .getTime()
+      .toString(23);
+    colorsArray[randomIndex] = {
+      color: hslToHex(random, 100, 40),
+      key: randomKey,
+    };
     setCorrectIndex(randomIndex);
     setColors(colorsArray);
   };

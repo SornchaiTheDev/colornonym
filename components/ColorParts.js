@@ -1,10 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../context/context";
 import ColorBtn from "./ColorBtn";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 function ColorParts() {
-  const { colors, correctIndex, column } = useContext(Context);
+  const { colors, correctIndex, column, score } = useContext(Context);
+  const control = useAnimation();
+
+  useEffect(() => {
+    control.start({ scale: [0.7, 1] });
+  }, [score]);
 
   return (
     <div
@@ -14,8 +19,12 @@ function ColorParts() {
         gridAutoFlow: true,
       }}
     >
-      {colors.map((color, index) => (
-        <motion.div layout key={index}>
+      {colors.map(({ color, key }, index) => (
+        <motion.div
+          animate={control}
+          transition={{ duration: 0.5 }}
+          key={index}
+        >
           <ColorBtn color={color} isCorrect={index == correctIndex} />
         </motion.div>
       ))}

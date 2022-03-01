@@ -34,6 +34,7 @@ function ColorBtn({ color, isCorrect }) {
     if (mode === "GAME_OVER" && isCorrect) return setMode("RESET");
     if (!isStart) startTimer();
     if (isCorrect) return correct();
+
     wrong();
   };
 
