@@ -54,14 +54,21 @@ function EndGame({ isNewHighScore }) {
   }, [isFetch]);
 
   const varaint = {
-    init: {
+    backdrop_init: {
       opacity: 0,
     },
-    high_score: {
+    backdrop_show: {
+      opacity: 1,
+    },
+    backdrop_hide: {
+      opacity: 0,
+    },
+
+    high_score_show: {
       translateY: 0,
       opacity: 1,
     },
-    hide: {
+    high_score_hide: {
       translateY: -100,
       opacity: 0,
     },
@@ -72,16 +79,23 @@ function EndGame({ isNewHighScore }) {
       {isNewHighScore && (
         <motion.div
           variants={varaint}
-          animate="high_score"
-          initial="init"
-          exit="hide"
-          transition={{ ease: "easeInOut", duration: 0.5 }}
+          animate="backdrop_show"
+          initial="backdrop_init"
+          exit="backdrop_hide"
+          transition={{ ease: "easeInOut", duration: 1, delay: 0.5 }}
           className="absolute flex flex-col  justify-center items-center  w-full min-h-screen bg-[rgba(0,0,0,0.5)] z-40"
         >
           {width !== Infinity && (
             <Confetti width={width} height={height} recycle={false} />
           )}
-          <div className="space-y-4 w-10/12  md:w-1/4">
+          <motion.div
+            variants={varaint}
+            initial="high_score_init"
+            animate="high_score_show"
+            exit="high_score_hide"
+            className="space-y-4 w-10/12  md:w-1/4"
+            transition={{ ease: "easeOut", duration: 0.5 }}
+          >
             <div className="bg-white rounded-lg  flex flex-col items-center p-4 space-y-4">
               <h1 className="text-2xl font-bold">New High Score !</h1>
               <div className="flex justify-center items-center">
@@ -98,7 +112,7 @@ function EndGame({ isNewHighScore }) {
               ? users.map(({ name, country, highScore }, index) => (
                   <motion.div layout key={name}>
                     <PlayerHighScore
-                      place={index + 1}
+                      // place={index + 1}
                       name={name}
                       country={country.code}
                       fullCountry={country.name}
@@ -130,13 +144,15 @@ function EndGame({ isNewHighScore }) {
               className="text-white font-bold bg-[#E4572E] w-full rounded-lg py-4"
               onClick={() => {
                 setMode("RESET");
-                setIsFetch(false);
-                setUsers([]);
+                setTimeout(() => {
+                  setIsFetch(false);
+                  setUsers([]);
+                }, 1000);
               }}
             >
               Play Again
             </button>
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

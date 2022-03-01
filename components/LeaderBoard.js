@@ -51,7 +51,7 @@ function Me({ isShow }) {
         style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)" }}
       >
         <div className="w-full flex items-center space-x-4">
-          <div className="w-8 h-8 bg-gray-300  rounded-full"></div>
+          {/* <div className="w-8 h-8 bg-gray-300  rounded-full"></div> */}
           <div className="w-full flex flex-col">
             <div className="w-3/6 h-4 bg-gray-300 rounded-full"></div>
             <div className="flex space-x-1 mt-2">
@@ -71,7 +71,7 @@ function Me({ isShow }) {
       style={{ boxShadow: "0px -2px 5px  rgba(0, 0, 0, 0.1)" }}
     >
       <div className="flex items-center space-x-4">
-        <h1>1</h1>
+        {/* <h1>1</h1> */}
         <div className="flex flex-col">
           <Username />
           <div className="flex space-x-1">
