@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../context/context";
 import ColorBtn from "./ColorBtn";
+import { motion } from "framer-motion";
 
 function ColorParts() {
   const { colors, correctIndex, column } = useContext(Context);
@@ -14,7 +15,9 @@ function ColorParts() {
       }}
     >
       {colors.map((color, index) => (
-        <ColorBtn key={index} color={color} isCorrect={index == correctIndex} />
+        <motion.div layout key={index}>
+          <ColorBtn color={color} isCorrect={index == correctIndex} />
+        </motion.div>
       ))}
     </div>
   );
